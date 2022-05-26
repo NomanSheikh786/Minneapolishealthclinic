@@ -22,6 +22,7 @@ const SplashScreenLogin =() => {
           justifyContent: 'flex-end',
         }}>
         <Image source={require('../../assets/Ellipsedown.png')} />
+        {/* testing comment */}
       </View>
     </SafeAreaView>
   );
