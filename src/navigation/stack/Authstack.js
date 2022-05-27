@@ -1,5 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import CreatePasswrod from '../../container/auth/CreatePasswrod';
+import ForgotPassword from '../../container/auth/ForgotPassword';
+import LoginScreen from '../../container/auth/LoginScreen';
+import SignUp from '../../container/auth/SignUp';
 import SplashScreenLogin from '../../container/auth/SplashScreenLogin';
 import SplashScreenLogo from '../../container/auth/SplashScreenLogo';
 
@@ -16,6 +20,26 @@ const AuthStack = () => {
       <Stack.Screen
         name="SplashScreenLogo"
         component={SplashScreenLogo}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CreatePasswrod"
+        component={CreatePasswrod}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

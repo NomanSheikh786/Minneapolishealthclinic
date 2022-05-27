@@ -1,11 +1,14 @@
-import React from "react"
-import { View, Text, ImageBackground, StyleSheet } from "react-native"
-import Navigation from "./src/navigation/stack/index"
+import React from 'react';
+import {NativeBaseProvider, Box} from 'native-base';
+import Navigation from './src/navigation/stack/index';
+import {View, Text, ImageBackground, StyleSheet} from 'react-native';
 
 const App = () => {
   return (
-    <Navigation />
-  )
-}
+    <NativeBaseProvider>
+        <Navigation />
+    </NativeBaseProvider>
+  );
+};
 
-export default App
+export default App;
