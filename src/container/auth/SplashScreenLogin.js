@@ -3,7 +3,7 @@ import {vh, vw} from '../../constaint/index';
 import React from 'react';
 import RedLongButton from '../../component/RedLongButton';
 
-const SplashScreenLogin =() => {
+const SplashScreenLogin = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#E5E5E5', flex: 1}}>
       <View>
@@ -22,10 +22,9 @@ const SplashScreenLogin =() => {
           justifyContent: 'flex-end',
         }}>
         <Image source={require('../../assets/Ellipsedown.png')} />
-       
       </View>
     </SafeAreaView>
   );
-}
+};
 
-export default SplashScreenLogin
+export default SplashScreenLogin;
