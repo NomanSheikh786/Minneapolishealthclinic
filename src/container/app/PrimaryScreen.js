@@ -87,7 +87,7 @@ function PrimaryScreen({route}) {
               height: vh / 14,
               alignItems: 'center',
               justifyContent: 'center',
-              marginTop: vh / 40,
+              marginTop: vh / 20,
             }}>
             <Text style={{color: '#FE2F50', fontSize: 16, fontWeight: '500'}}>
               Click Here

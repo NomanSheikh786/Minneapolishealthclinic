@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
           style={{
             alignSelf: 'center',
             width: vw - 45,
-            margin: vh * 0.12,
+            marginTop: vh * 0.12,
             flex: 1,
             // backgroundColor:"yellow"
           }}>
@@ -69,16 +69,19 @@ const LoginScreen = ({navigation}) => {
 
           {/* <View style={{alignSelf: 'center', width: vw - 75}}> */}
 
-          <TouchableOpacity style={{marginTop: vh * 0.04}}>
-            <Text
-              onPress={() => navigation.navigate('ForgotPassword')}
-              style={{color: '#006EF0', textAlign: 'right', fontSize: 16}}>
+          <TouchableOpacity
+            style={{marginTop: vh * 0.04}}
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            <Text style={{color: '#006EF0', textAlign: 'right', fontSize: 16}}>
               Forgot Password?
             </Text>
           </TouchableOpacity>
 
           <View style={{marginTop: vh * 0.04}}>
-            <RedLongButton buttonText="Login" />
+            <RedLongButton
+              onPress={() => navigation.navigate('BottomTabs')}
+              buttonText="Login"
+            />
           </View>
 
           <View

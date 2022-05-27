@@ -176,9 +176,9 @@ function HomeScreen({navigation}) {
                   marginVertical: '3%',
                 }}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('PrimaryScreen', {state: item})
-                  }
+                  // onPress={() =>
+                  //   navigation.navigate('PrimaryScreen', {state: item})
+                  // }
                   style={{
                     backgroundColor: 'white',
                     width: 85,

@@ -15,15 +15,16 @@ const AuthStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="SplashScreenLogin"
-        component={SplashScreenLogin}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="SplashScreenLogo"
         component={SplashScreenLogo}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="SplashScreenLogin"
+        component={SplashScreenLogin}
+        options={{headerShown: false}}
+      />
+
       <Stack.Screen
         name="CheckEmailScreen"
         component={CheckEmailScreen}

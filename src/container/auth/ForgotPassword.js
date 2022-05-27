@@ -53,7 +53,7 @@ export default function ForgotPassword({navigation}) {
 
         <View style={{marginTop: vh * 0.04}}>
           <RedLongButton
-            onPress={() => navigation.navigate('CreatePasswrod')}
+            onPress={() => navigation.navigate('CheckEmailScreen')}
             buttonText="Send me now"
           />
         </View>

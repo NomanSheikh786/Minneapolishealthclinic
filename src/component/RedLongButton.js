@@ -22,6 +22,7 @@ const style = StyleSheet.create({
   textcolor: {
     color: 'white',
     textAlign: 'center',
+    fontSize: 16,
   },
 });
 export default RedLongButton;

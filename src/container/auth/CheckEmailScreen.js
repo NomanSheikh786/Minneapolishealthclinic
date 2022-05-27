@@ -9,7 +9,10 @@ import {
 } from 'react-native';
 import checkCircle from '../../assets/checkCircle.png';
 import {vh, vw} from '../../constaint';
-function CheckEmailScreen(props) {
+function CheckEmailScreen({navigation}) {
+  setTimeout(() => {
+    navigation.navigate('CreatePasswrod');
+  }, 2000);
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -55,7 +58,7 @@ function CheckEmailScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, backgroundColor: '#FFF'},
 });
 
 export default CheckEmailScreen;

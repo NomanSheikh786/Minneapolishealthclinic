@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, Text, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, ImageBackground, StyleSheet, StatusBar} from 'react-native';
 import Navigation from './src/navigation/stack/index';
-import {NativeBaseProvider, Box} from 'native-base';
+import {NativeBaseProvider} from 'native-base';
 const App = () => {
   return (
     <NativeBaseProvider>
+      <StatusBar backgroundColor={'#FFF'} barStyle="dark-content" />
+
       <Navigation />
     </NativeBaseProvider>
   );

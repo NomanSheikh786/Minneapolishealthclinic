@@ -33,7 +33,7 @@ const SignUp = ({navigation}) => {
           style={{
             alignSelf: 'center',
             width: vw - 45,
-            margin: vh * 0.12,
+            marginTop: vh * 0.12,
             flex: 1,
             // backgroundColor:"yellow"
           }}>
