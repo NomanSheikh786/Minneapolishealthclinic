@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, SafeAreaView} from 'react-native';
+import {View, Image, SafeAreaView} from 'react-native';
 import RedLongButton from '../../component/RedLongButton';
 
 const SplashScreenLogo = () => {
