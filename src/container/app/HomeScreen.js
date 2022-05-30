@@ -97,7 +97,7 @@ const data = [
 
 function HomeScreen({navigation}) {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
           backgroundColor: '#FFF',
@@ -152,8 +152,8 @@ function HomeScreen({navigation}) {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingVertical: 19,
-            paddingHorizontal: 19,
+            paddingVertical: 15,
+            paddingHorizontal: 20,
           }}>
           <Text style={{color: '#FFF', fontSize: 15}}>What do you need</Text>
           <TouchableOpacity activeOpacity={0.6}>
@@ -166,23 +166,27 @@ function HomeScreen({navigation}) {
             paddingBottom: vh / 2,
             flexDirection: 'row',
             flexWrap: 'wrap',
+            // borderWidth: 1,
+            // borderColor: 'green',
+            // marginLeft: vw / 20,
           }}>
           {data.map((item, ind) => {
             return (
               <View
                 key={ind}
                 style={{
-                  marginHorizontal: '6%',
+                  // marginHorizontal: '5%',
                   marginVertical: '3%',
+                  paddingHorizontal: vw / 18,
                 }}>
                 <TouchableOpacity
-                  // onPress={() =>
-                  //   navigation.navigate('PrimaryScreen', {state: item})
-                  // }
+                  onPress={() =>
+                    navigation.navigate('PrimaryScreen', {state: item})
+                  }
                   style={{
                     backgroundColor: 'white',
-                    width: 85,
-                    height: 85,
+                    width: vw / 4.5,
+                    height: vh / 7.5,
                     elevation: 3,
                     borderRadius: 5,
                     justifyContent: 'center',
@@ -190,7 +194,8 @@ function HomeScreen({navigation}) {
                   }}>
                   <Image source={item.image} />
                 </TouchableOpacity>
-                <View style={{width: 85, alignItems: 'center', marginTop: 5}}>
+                <View
+                  style={{width: vw / 4.5, alignItems: 'center', marginTop: 5}}>
                   <Text
                     style={{color: '#FFF', fontSize: 12, textAlign: 'center'}}>
                     {item.name}
@@ -201,7 +206,7 @@ function HomeScreen({navigation}) {
           })}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

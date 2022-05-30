@@ -46,10 +46,12 @@ function CheckEmailScreen({navigation}) {
             justifyContent: 'flex-end',
           }}>
           <Text style={{textAlign: 'center', lineHeight: 22, color: '#5E6F88'}}>
-            Did not receive the email? Check your spam filter, or
-            <TouchableOpacity>
-              <Text style={{color: '#007AFF'}}>try another email address</Text>
-            </TouchableOpacity>
+            Did not receive the email? Check your spam filter, or &nbsp;
+            <Text
+              onPress={() => navigation.goBack()}
+              style={{color: '#007AFF'}}>
+              try another email address
+            </Text>
           </Text>
         </View>
       </View>
