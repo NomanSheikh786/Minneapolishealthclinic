@@ -6,7 +6,6 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <StatusBar backgroundColor={'#FFF'} barStyle="dark-content" />
-
       <Navigation />
     </NativeBaseProvider>
   );

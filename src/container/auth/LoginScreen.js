@@ -5,16 +5,71 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import InputType from '../../component/InputType';
 import {vh, vw} from '../../constaint/index';
 import RedLongButton from '../../component/RedLongButton';
-import {HStack, Checkbox} from 'native-base';
+import { Checkbox,  Stack, Alert, IconButton, HStack, VStack, CloseIcon,  Center, NativeBaseProvider} from 'native-base';
+import firebase from '../../configue/index';
+
 
 const LoginScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [Loading, setLoading] = useState(false);
+
+  const [check,setCheck] =useState(false)
+
+
+  const statusArray = [{
+    status: "success",
+    title: "Selection successfully moved!"
+  }];
+
+  const loginUser = () => {
+    if (email == '' || password == '') {
+      alert('Must Required fill this blank');
+      
+ 
+  
+
+    } else {
+      setLoading(true);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(res => {
+          let id = firebase.auth().currentUser.uid;
+          firebase
+            .database()
+            .ref(`users/${id}`)
+            .update({isLogin: true})
+            .then(respo => {
+              setEmail('');
+              setPassword('');
+              setLoading(false);
+            
+              alert('Sign in Success');
+            })
+            .catch(errr => {
+              alert(errr.message);
+            });
+        })
+        .catch(err => {
+          setLoading(false);
+          alert(err.message);
+        });
+    }
+  };
+
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
+
+
+
+
       <ScrollView>
         <Text
           style={{
@@ -48,7 +103,11 @@ const LoginScreen = ({navigation}) => {
               Email
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Email Address" />
+              <InputType
+                state={email}
+                setState={setEmail}
+                placeholder="Enter Email Address"
+              />
             </View>
           </View>
 
@@ -63,7 +122,12 @@ const LoginScreen = ({navigation}) => {
               Password
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Password" />
+              <InputType
+                state={password}
+                setState={setPassword}
+                secureTextEntry={true}
+                placeholder="Enter Password"
+              />
             </View>
           </View>
 
@@ -78,10 +142,11 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={{marginTop: vh * 0.04}}>
-            <RedLongButton
-              onPress={() => navigation.navigate('BottomTabs')}
-              buttonText="Login"
-            />
+            {Loading ? (
+              <ActivityIndicator color={'orange'} size={'large'} />
+            ) : (
+              <RedLongButton onPress={loginUser} buttonText="Login" />
+            )}
           </View>
 
           <View
@@ -100,7 +165,6 @@ const LoginScreen = ({navigation}) => {
             </View>
             <View>
               <Text style={{fontSize: 16, marginLeft: vw * 0.02}}>
-                {' '}
                 Remember me
               </Text>
             </View>

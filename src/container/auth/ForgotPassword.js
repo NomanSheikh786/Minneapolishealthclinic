@@ -1,11 +1,39 @@
-import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import {View, Text, SafeAreaView, TouchableOpacity, Image,ActivityIndicator} from 'react-native';
+import React,{useState} from 'react';
 import InputType from '../../component/InputType';
 import {vh, vw} from '../../constaint/index';
 import RedLongButton from '../../component/RedLongButton';
 import {HStack, Checkbox, Center, NativeBaseProvider} from 'native-base';
+import firebase from 'firebase';
 
 export default function ForgotPassword({navigation}) {
+
+
+const [email, setEmail] = useState ("")
+const [loading, setLoading] = useState ("")
+
+const Forgetpassword = () =>{
+  if (email == ""){
+    alert("Fill This blank")
+    
+  }
+  else{
+    setLoading(true);
+    firebase.auth().sendPasswordResetEmail(email)
+    .then(function (user){
+      setLoading(false);
+      alert("Please Check Your Email...")
+      setEmail('');
+    })
+    .catch(function(e){
+      setLoading(false);
+      console.log(e)
+    })
+  }
+  
+  
+}
+
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
       <Text
@@ -47,15 +75,20 @@ export default function ForgotPassword({navigation}) {
             Email
           </Text>
           <View style={{alignItems: 'center'}}>
-            <InputType placeholder="Enter Email Address" />
+            <InputType placeholder="Enter Email Address"
+              state={email}
+              setState={setEmail}
+            />
           </View>
         </View>
 
         <View style={{marginTop: vh * 0.04}}>
-          <RedLongButton
-            onPress={() => navigation.navigate('CheckEmailScreen')}
+          {loading ? (<ActivityIndicator color={'orange'} size={'large'} />) :  ( <RedLongButton
             buttonText="Send me now"
-          />
+            onPress={Forgetpassword}
+          />)}
+
+        
         </View>
       </View>
     </SafeAreaView>
