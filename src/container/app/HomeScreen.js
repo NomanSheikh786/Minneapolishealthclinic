@@ -1,3 +1,4 @@
+import { Alert, CloseIcon, HStack, IconButton, VStack } from 'native-base';
 import React from 'react';
 import {
   View,
@@ -96,8 +97,26 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
+    // const [check,setCheck] =useState(false)
+
   return (
     <View style={styles.container}>
+
+{/* {check ? <Alert w="100%" status={"success"}>
+              <VStack space={2} flexShrink={1} w="100%">
+                <HStack flexShrink={1} space={2} justifyContent="space-between">
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt="1" />
+                    <Text fontSize="md" color="coolGray.800">
+                    Selection successfully moved!
+                    </Text>
+                  </HStack>
+                  <IconButton variant="unstyled" _focus={{
+                borderWidth: 0
+              }} icon={<CloseIcon size="3" color="coolGray.600" />} />
+                </HStack>
+              </VStack>
+            </Alert> : null} */}
       <View
         style={{
           backgroundColor: '#FFF',

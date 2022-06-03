@@ -5,16 +5,112 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import InputType from '../../component/InputType';
 import {vh, vw} from '../../constaint/index';
 import RedLongButton from '../../component/RedLongButton';
-import {HStack, Checkbox} from 'native-base';
+import firebase from '../../configue/index';
+import { Checkbox,  Stack, Alert, IconButton, HStack, VStack, CloseIcon,  Center, NativeBaseProvider} from 'native-base';
 
 const SignUp = ({navigation}) => {
+  const [check,setCheck] =useState(false)
+
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const [Loading, setLoading] = useState(false);
+  const [checkbox, setCheckbox] = useState("");
+  console.log(password == confirmpassword ? "done":"error")
+
+  const signUpUser = () => {
+    if (name == "" || email == "" || password == "" || confirmpassword == "" || !checkbox){
+      alert("Please Fill all blanks")
+    }
+     else if(password != confirmpassword){
+      alert("same password required")
+
+    }
+    else{
+      setLoading(true)
+      //  console.log("fire",firebase)
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+      //  yaha sa first then start ha 
+          .then(response => {
+            let id = firebase.auth().currentUser.uid;
+            firebase.database().ref(`users/${id}`).set({
+              name,
+              email,
+              password,
+              // confirmpassword,
+              isLogin:false
+             }).then(res =>{
+              setLoading(false)
+              setCheck(true)
+              
+              // alert("SignUp Success")
+              setName("")
+              setEmail("")
+              setPassword("")
+              setConfirmPassword("")
+              setCheckbox(false)
+
+              }).catch(err => {
+                alert(err.message)
+                setLoading(false)
+                console.log(err, 'Erorrr');
+              });
+              
+            })
+          .catch(err=>{
+            setLoading(true)
+            alert(err.message)
+          })  
+           
+            // yaha second then band ha 
+                
+          
+    }
+
+
+
+      // const renderButton = () =>{
+      //   if (Loading == true){
+      //   return <ActivityIndicator size="large" color="orange"/>
+      //   }
+      //   else{
+      //     return(
+      //     <RedLongButton buttonText="Register" onPress={signUpUser} />
+      //     )
+      //   }
+      // }
+  };
+
+  console.log(checkbox)
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
+
+{check ? <Alert w="90%" borderRadius={10} status={"success"}  alignSelf="center">
+              <VStack space={2} flexShrink={1} w="100%" >
+                <HStack flexShrink={1} space={2}  alignItems="center" justifyContent="space-between" >
+                  <HStack space={2} flexShrink={1}>
+                    <Alert.Icon mt="1" />
+                    <Text fontSize="large" color="coolGray.800">
+                    Signup successfully !
+                    </Text>
+                  </HStack>
+                  <IconButton onPress={() => setCheck(false)} variant="unstyled" _focus={{
+                borderWidth: 0
+              }} icon={<CloseIcon  size="4" color="coolGray.600" />} />
+                </HStack>
+              </VStack>
+            </Alert> : null}
+
       <ScrollView>
         <Text
           style={{
@@ -48,7 +144,11 @@ const SignUp = ({navigation}) => {
               Name
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Your Name" />
+              <InputType
+                state={name}
+                setState={setName}
+                placeholder="Enter Your Name"
+              />
             </View>
           </View>
 
@@ -63,7 +163,11 @@ const SignUp = ({navigation}) => {
               Email
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Your Email" />
+              <InputType
+                state={email}
+                setState={setEmail}
+                placeholder="Enter Your Email"
+              />
             </View>
           </View>
 
@@ -78,7 +182,12 @@ const SignUp = ({navigation}) => {
               Password
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Password" />
+              <InputType
+              secureTextEntry={true}
+              state={password}
+              setState={setPassword}
+                placeholder="Enter Password"
+              />
             </View>
           </View>
           <View style={{marginTop: vh * 0.04}}>
@@ -92,7 +201,12 @@ const SignUp = ({navigation}) => {
               Confirm Password
             </Text>
             <View style={{alignItems: 'center'}}>
-              <InputType placeholder="Enter Confirm Password" />
+              <InputType
+              secureTextEntry={true}
+              state={confirmpassword}
+              setState={setConfirmPassword}
+                placeholder="Enter Confirm Password"
+              />
             </View>
           </View>
 
@@ -105,7 +219,7 @@ const SignUp = ({navigation}) => {
             }}>
             <View>
               <HStack space={7}>
-                <Checkbox
+                <Checkbox onChange={(e) => setCheckbox(e)}
                   value="Remember me"
                   accessibilityLabel="Remember me"
                 />
@@ -118,10 +232,13 @@ const SignUp = ({navigation}) => {
             </View>
           </View>
 
-          <View style={{marginTop: vh * 0.04}}>
-            <RedLongButton buttonText="Register" />
-          </View>
-
+           <View style={{marginTop: vh * 0.04}}>
+            {Loading ? <ActivityIndicator color={"orange"} size={"large"} /> :   <RedLongButton buttonText="Register" onPress={signUpUser} />}
+         
+       
+           </View> 
+              {/* {renderButton()} */}
+          {/* 
           <View
             style={{
               flexDirection: 'row',
@@ -131,7 +248,7 @@ const SignUp = ({navigation}) => {
             <TouchableOpacity onPress={() => navigation.navigate('')}>
               <Text style={{color: '#006EF0', fontSize: 16}}> </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

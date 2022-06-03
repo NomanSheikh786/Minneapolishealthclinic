@@ -18,10 +18,8 @@ export default function InputType(props) {
         secureTextEntry={props.secureTextEntry}
         placeholder={props.placeholder}
         placeholderTextColor="#5E6F88"
-        value={props.value}
-        multiline={props.multiline}
-        numberOfLines={props.numberOfLines}
-        // onChangeText={val => props.changeState(val)}
+        value={props.state}
+        onChangeText={val => props.setState(val)}
       />
     </View>
   );
