@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function InputType(props) {
   return (
-    <View style={{width: "100%", height: 60}}>
+    <View style={{width: '100%', height: 60}}>
       <TextInput
         style={{
           fontSize: 14,
@@ -11,13 +11,16 @@ export default function InputType(props) {
           borderWidth: 1,
           borderColor: '#B2BAC6',
           borderRadius: 8,
-          paddingHorizontal:10
-         
+          padding: 10,
+          height: props.height,
+          textAlignVertical: props.textAlignVertical,
         }}
         secureTextEntry={props.secureTextEntry}
         placeholder={props.placeholder}
         placeholderTextColor="#5E6F88"
         value={props.value}
+        multiline={props.multiline}
+        numberOfLines={props.numberOfLines}
         // onChangeText={val => props.changeState(val)}
       />
     </View>

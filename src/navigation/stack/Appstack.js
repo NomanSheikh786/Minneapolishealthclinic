@@ -6,6 +6,7 @@ import CalenderScreen from '../../container/app/CalenderScreen';
 import ChatScreen from '../../container/app/ChatScreen';
 import NotificationScreen from '../../container/app/NotificationScreen';
 import ProfileScreen from '../../container/app/ProfileScreen';
+import FormScreen from '../../container/app/FormScreen';
 
 const Stack = createStackNavigator();
 

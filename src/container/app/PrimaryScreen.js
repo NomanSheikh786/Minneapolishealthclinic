@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {vh} from '../../constaint';
 
-function PrimaryScreen({route}) {
+function PrimaryScreen({route, navigation}) {
   const {state} = route.params;
   return (
     <SafeAreaView style={styles.container}>
@@ -81,7 +81,7 @@ function PrimaryScreen({route}) {
               {state.title}
             </Text>
             <TouchableOpacity
-              onPress={() => console.log('hello')}
+              onPress={() => navigation.navigate('FormScreen', {state: state})}
               activeOpacity={0.6}
               style={{
                 backgroundColor: '#FFF',

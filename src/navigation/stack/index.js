@@ -5,7 +5,7 @@ import BottomNavigation from '../bottom/BottonTab';
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <AuthStack />
+      <BottomNavigation />
     </NavigationContainer>
   );
 };

@@ -1,5 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import Form1 from '../../component/primaryCaseForm/Form1';
+import Form2 from '../../component/primaryCaseForm/Form2';
+import Form3 from '../../component/primaryCaseForm/Form3';
+import FormScreen from '../../container/app/FormScreen';
 import CheckEmailScreen from '../../container/auth/CheckEmailScreen';
 import CreatePasswrod from '../../container/auth/CreatePasswrod';
 import ForgotPassword from '../../container/auth/ForgotPassword';
@@ -50,12 +54,8 @@ const AuthStack = () => {
         component={CreatePasswrod}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="BottomTabs"
-        component={BottomNavigation}
-        options={{headerShown: false}}
-      />
     </Stack.Navigator>
   );
 };
+
 export default AuthStack;
