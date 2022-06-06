@@ -20,6 +20,7 @@ export default function InputType(props) {
         placeholderTextColor="#5E6F88"
         value={props.state}
         onChangeText={val => props.setState(val)}
+        keyboardType={props.type}
       />
     </View>
   );

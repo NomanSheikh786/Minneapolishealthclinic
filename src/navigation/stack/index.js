@@ -10,25 +10,34 @@ import BottomNavigation from '../bottom/BottonTab';
 const Navigation = () => {
   const [mystack, setMyStack] = useState(<Text></Text>);
 
-  useEffect(() => {
+  const checkAuth = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        let id = firebase.auth().currentUser.uid;
-        firebase
-          .database()
-          .ref(`users/${id}`)
-          .on('value', firebaseData => {
-            let data = firebaseData.val();
-            if (data.isLogin) {
-              setMyStack(<BottomNavigation />);
-            } else {
-              setMyStack(<AuthStack />);
-            }
-          });
+        setMyStack(<BottomNavigation />);
       } else {
         setMyStack(<AuthStack />);
       }
+
+      // if (user) {
+      //   let id = firebase.auth().currentUser.uid;
+      //   firebase
+      //     .database()
+      //     .ref(`users/${id}`)
+      //     .on('value', firebaseData => {
+      //       let data = firebaseData.val();
+      //       if (data.isLogin) {
+      //         setMyStack(<BottomNavigation />);
+      //       } else {
+      //         setMyStack(<AuthStack />);
+      //       }
+      //     });
+      // } else {
+      //   setMyStack(<AuthStack />);
+      // }
     });
+  };
+  useEffect(() => {
+    checkAuth();
   }, []);
 
   return (
