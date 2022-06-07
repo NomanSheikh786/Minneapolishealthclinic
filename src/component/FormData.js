@@ -142,6 +142,69 @@ const timeZone = [
   'Asmara (GMT+03:00)                             11:48 PM',
 ];
 
+const appointments = [
+  'Primary Care',
+  'Aesthetic Services',
+  'Medical Weight Loss',
+  'Covid-19 Testing',
+  'Covid-19 Treatment',
+  'Covid-19 Vaccine',
+  'Immigration Exams & Forms',
+  'Lipocel Appointment',
+  'Pre-Op Evaluations',
+];
+
+const Appointmentdata = [
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+  {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '09:15 PM - 10:30 PM',
+    phone: '763-496-5708',
+    image: require('../assets/profile.png'),
+  },
+];
 export {
   month,
   day,
@@ -168,4 +231,6 @@ export {
   vaccine,
   covidCheck,
   timeZone,
+  appointments,
+  Appointmentdata,
 };

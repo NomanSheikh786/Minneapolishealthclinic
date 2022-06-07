@@ -12,11 +12,12 @@ const Navigation = () => {
 
   const checkAuth = () => {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        setMyStack(<BottomNavigation />);
-      } else {
-        setMyStack(<AuthStack />);
-      }
+      setMyStack(user);
+      // if (user) {
+      //   setMyStack(<BottomNavigation />);
+      // } else {
+      //   setMyStack(<AuthStack />);
+      // }
 
       // if (user) {
       //   let id = firebase.auth().currentUser.uid;
@@ -42,7 +43,7 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      {mystack}
+      {mystack ? <BottomNavigation /> : <AuthStack />}
 
       {/* <HomeStack/> */}
     </NavigationContainer>

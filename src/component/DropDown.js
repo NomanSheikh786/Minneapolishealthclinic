@@ -74,7 +74,6 @@ function DropDown({
               backgroundColor: '#FE284D',
             }}>
             {data.map((e, i) => {
-              console.log(e);
               return (
                 <Select.Item
                   backgroundColor={'#FAFAFA'}

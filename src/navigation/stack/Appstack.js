@@ -2,11 +2,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import HomeScreen from '../../container/app/HomeScreen';
 import PrimaryScreen from '../../container/app/PrimaryScreen';
-import CalenderScreen from '../../container/app/CalenderScreen';
-import ChatScreen from '../../container/app/ChatScreen';
+import DoctorListingScreen from '../../container/app/DoctorListingScreen';
 import NotificationScreen from '../../container/app/NotificationScreen';
 import ProfileScreen from '../../container/app/ProfileScreen';
 import FormScreen from '../../container/app/FormScreen';
+import DoctorListingDetailsScreen from '../../container/app/DoctorListingDetailsScreen';
+import AppointmentScreen from '../../container/app/AppointmentScreen';
+import AppointmentListScreen from '../../container/app/AppointmentListScreen';
+import AppointmentHIstoryDetails from '../../container/app/AppointemenList/AppointmentHIstoryDet';
 
 const Stack = createStackNavigator();
 
@@ -27,24 +30,41 @@ const HomeStack = () => {
   );
 };
 
-const CalenderStack = () => {
+const DoctorListingStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="CalenderScreen"
-        component={CalenderScreen}
+        name="DoctorListingScreen"
+        component={DoctorListingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DoctorListingDetailsScreen"
+        component={DoctorListingDetailsScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 };
 
-const ChatStack = () => {
+const AppointmentStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
+        name="AppointmentScreen"
+        component={AppointmentScreen}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="AppointmentListScreen"
+        component={AppointmentListScreen}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="AppointmentHistoryDetails"
+        component={AppointmentHIstoryDetails}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -73,4 +93,10 @@ const ProfileStack = () => {
     </Stack.Navigator>
   );
 };
-export {HomeStack, CalenderStack, ChatStack, NotificationStack, ProfileStack};
+export {
+  HomeStack,
+  DoctorListingStack,
+  AppointmentStack,
+  NotificationStack,
+  ProfileStack,
+};

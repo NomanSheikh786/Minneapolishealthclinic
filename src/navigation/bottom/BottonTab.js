@@ -1,19 +1,25 @@
 // import bottom1 from '../../assets/bottom1';
 import React from 'react';
 import bottom1 from '../../assets/bottom1.png';
-import bottom2 from '../../assets/bottom2.png';
-import bottom2active from '../../assets/bottom2active.png';
+import bottom1active from '../../assets/bottom1active.png';
+
+import bottom2 from '../../assets/bottom2(3).png';
+import bottom2active from '../../assets/bottom2active(2).png';
 
 import bottom3 from '../../assets/bottom3.png';
+// import bottom3active from '../../assets/bottom3active.png';
+
 import bottom4 from '../../assets/bottom4.png';
+import bottom4active from '../../assets/bottom4active.png';
+
 import bottom5 from '../../assets/bottom5.png';
 import bottom_home from '../../assets/bottom_home.png';
 import {
   HomeStack,
-  CalenderStack,
-  ChatStack,
+  AppointmentStack,
   NotificationStack,
   ProfileStack,
+  DoctorListingStack,
 } from '../stack/Appstack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -99,7 +105,7 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom_home} />
+              <Image width={20} source={bottom1active} />
             ) : (
               <Image width={20} source={bottom1} />
             ),
@@ -107,22 +113,12 @@ function Tab() {
       />
 
       <Tab.Screen
-        name="CalenderStack"
-        component={CalenderStack}
+        name="DoctorListingStack"
+        component={DoctorListingStack}
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <View
-                style={{
-                  backgroundColor: '#FE284D',
-                  borderRadius: 6,
-                  width: 38,
-                  height: 38,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image width={20} source={bottom2active} />
-              </View>
+              <Image width={20} source={bottom2active} />
             ) : (
               <Image width={20} source={bottom2} />
             ),
@@ -130,8 +126,8 @@ function Tab() {
       />
 
       <Tab.Screen
-        name="ChatStack"
-        component={ChatStack}
+        name="AppointmentStack"
+        component={AppointmentStack}
         options={{
           tabBarIcon: ({color, focused}) => (
             <Image width={20} source={bottom3} resizeMode="contain" />
@@ -146,7 +142,7 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom_home} />
+              <Image width={20} source={bottom4active} />
             ) : (
               <Image width={20} source={bottom4} />
             ),
@@ -159,7 +155,7 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom_home} />
+              <Image width={20} source={bottom4active} />
             ) : (
               <Image width={20} source={bottom5} />
             ),
