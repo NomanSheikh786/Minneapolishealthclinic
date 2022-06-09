@@ -48,6 +48,8 @@ import PreOpForm2 from '../../component/preOpForm/Form2';
 import PreOpForm3 from '../../component/preOpForm/Form3';
 
 import FormSubmit from '../../component/FormSubmit';
+import ResetPassword from '../../container/app/ResetPassword/ResetPassword';
+import PaymentMethod from '../../container/app/PaymentMethod';
 
 function Tab() {
   const Tab = createBottomTabNavigator();
@@ -306,6 +308,17 @@ const BottomNavigation = () => {
       <Stack.Screen
         name="FormSubmit"
         component={FormSubmit}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PaymentMethod"
+        component={PaymentMethod}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
