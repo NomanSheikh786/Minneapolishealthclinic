@@ -40,7 +40,7 @@ function ProfileScreen(props) {
 <TouchableOpacity style={{justifyContent:"center",alignSelf:"center",position:"absolute",bottom:-50}}>
 <View style={{position:"relative"}}>
 <Image source={require("../../assets/docpro.png")}/>
-<Image style={{position:"absolute",bottom:-15,right:-23}} source={require("../../assets/Camera.png")}/>
+<Image style={{position:"absolute",bottom:-15,right:-23}} source={require("../../assets/cam.png")}/>
 </View>
 </TouchableOpacity>
 

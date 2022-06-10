@@ -124,11 +124,13 @@ const NotificationDefaults = (props)=> {
       width:50,
       height:50,
       borderRadius:25,
+      
     },
     text: {
       marginBottom: 5,
       flexDirection: 'row',
       flexWrap:'wrap',
+      color:"black"
       
      
 
@@ -136,10 +138,12 @@ const NotificationDefaults = (props)=> {
     content: {
       flex: 1,
       marginLeft: 16,
-      marginRight: 0
+      marginRight: 0,
+      color:"black"
     },
     mainContent: {
-      marginRight: 60
+      marginRight: 60,
+      color:"black"
     },
     img: {
       height: 50,
@@ -149,20 +153,24 @@ const NotificationDefaults = (props)=> {
     attachment: {
       position: 'absolute',
       right: 0,
-      top:10
+      top:10,
+      color:"black"
     
     },
     separator: {
       height: 13,
-      backgroundColor: "white"
+      backgroundColor: "white",
+      color:"black"
     },
     timeAgo:{
       fontSize:12,
-      color:"#696969"
+      color:"black"
+      
     },
     name:{
       fontSize:16,
-      color:"#1E90FF"
+      color:"#1E90FF",
+      color:"black"
       
     }
   });
