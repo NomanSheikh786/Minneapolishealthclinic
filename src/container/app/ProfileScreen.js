@@ -1,9 +1,14 @@
-import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React,{useState} from 'react';
+import {View, StyleSheet, Text,SafeAreaView,Image,TouchableOpacity,ScrollView} from 'react-native';
 import RedLongButton from '../../component/RedLongButton';
 import firebase from 'firebase';
+import {vh, vw} from '../../constaint/index';
+import { Switch, HStack, Center, NativeBaseProvider } from "native-base";
+import SpaceGrayButton from "../../component/SpaceGrayButton"
+import Modaal from "../../component/Modaal"
 
 function ProfileScreen(props) {
+  const [showModal, setShowModal] = useState(false);
   const handleLogout = () => {
     firebase
       .auth()
@@ -14,16 +19,100 @@ function ProfileScreen(props) {
       .catch(err => console.log(err));
   };
   return (
-    <View style={styles.container}>
-      <View style={{width: '90%'}}>
-        <RedLongButton buttonText="Logut" onPress={handleLogout} />
-      </View>
-    </View>
-  );
+  // <View style={styles.container}>
+  //     <View style={{width: '90%'}}>
+  //       <RedLongButton buttonText="Logut" onPress={handleLogout} />
+  //     </View>
+  //   </View>
+  
+    <SafeAreaView>
+      <Modaal 
+      showModal={showModal}
+      setShowModal={setShowModal}
+      onPress={handleLogout}
+      />
+
+      <ScrollView contentContainerStyle={{paddingBottom:120}}>
+<View style={{backgroundColor:"#FE284D",height: vh * 0.25,borderBottomEndRadius:25,borderBottomLeftRadius:25}}>
+<TouchableOpacity style={{position:"absolute",right:15,marginTop: vh * 0.06}}>
+  <Image source={require("../../assets/ni.png")}/>
+</TouchableOpacity>
+<TouchableOpacity style={{justifyContent:"center",alignSelf:"center",position:"absolute",bottom:-50}}>
+<View style={{position:"relative"}}>
+<Image source={require("../../assets/docpro.png")}/>
+<Image style={{position:"absolute",bottom:-15,right:-23}} source={require("../../assets/cam.png")}/>
+</View>
+</TouchableOpacity>
+
+</View>
+<Text style={{fontWeight:"bold",fontSize:30,color:"black",textAlign:"center",marginTop : vh * 0.08}}>
+Albert Stanley 
+</Text>
+
+
+{/* <ScrollView> */}
+<View style={{flexDirection:"row",justifyContent:"space-between",marginTop: vh * 0.03}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  My Profile
+  </Text>
+  <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/>
+</View>
+<View style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  Appointments
+  </Text>
+  <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/>
+</View>
+<TouchableOpacity style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  FAQ’s
+  </Text>
+  <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/>
+</TouchableOpacity>
+<TouchableOpacity onPress={()=>props.navigation.navigate("NotificationStack")} style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  Notifications
+  </Text>
+  {/* <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/> */}
+  <HStack alignItems="center" space={8}>
+      <Switch />
+    </HStack>
+</TouchableOpacity>
+<TouchableOpacity onPress={()=>props.navigation.navigate("PaymentMethod")} style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  Payment Method
+  </Text>
+  <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/>
+</TouchableOpacity>
+<View style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  Change Language
+  </Text>
+  {/* <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/> */}
+  <Text style={{color:"#007BFF",margin:20,fontSize:18}}>
+    English
+  </Text>
+</View>
+<TouchableOpacity onPress={()=>props.navigation.navigate("ResetPassword")} style={{flexDirection:"row",justifyContent:"space-between"}}>
+  <Text style={{color:"black",fontSize:18,fontWeight:"bold",margin: 15}}>
+  Change Password
+  </Text>
+  <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/>
+</TouchableOpacity>
+<View style={{marginTop : vh * 0.05,width:"90%",alignSelf:"center"}}>
+<SpaceGrayButton 
+buttonText="Logout"
+onPress={() => setShowModal(true)}/>
+</View>
+</ScrollView>
+
+    </SafeAreaView>
+  
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-});
+// const styles = StyleSheet.create({
+//   container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+// });
 
 export default ProfileScreen;
