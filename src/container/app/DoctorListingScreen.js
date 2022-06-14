@@ -16,7 +16,7 @@ import time from '../../assets/time.png';
 import phone from '../../assets/phone.png';
 import {Appointmentdata} from '../../component/FormData';
 
-function DoctorListingScreen({navigation}) {
+function DoctorListingScreen({navigation, route}) {
   return (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView> */}
@@ -86,7 +86,7 @@ function DoctorListingScreen({navigation}) {
                     resizeMode="contain"
                     style={{borderRadius: 7, width: 65, height: 65}}
                   />
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'flex-end',
@@ -104,7 +104,7 @@ function DoctorListingScreen({navigation}) {
                       }}>
                       {item.phone}
                     </Text>
-                  </View>
+                  </View> */}
                 </View>
                 <View
                   style={{
@@ -154,16 +154,23 @@ function DoctorListingScreen({navigation}) {
                     // height: '100%',
                   }}>
                   <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('DoctorListingDetailsScreen', {
+                        item: item,
+                      })
+                    }
                     style={{
                       backgroundColor: '#FE284D',
-                      width: vw / 5,
+                      width: vw / 4,
                       height: vh / 22,
                       borderRadius: 50,
                       elevation: 3,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                    <Text style={{color: '#FFF', fontWeight: '500'}}>Book</Text>
+                    <Text style={{color: '#FFF', fontWeight: '500'}}>
+                      View Details
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </TouchableOpacity>

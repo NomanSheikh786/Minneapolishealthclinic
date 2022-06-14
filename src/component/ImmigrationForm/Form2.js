@@ -23,12 +23,57 @@ import DropDown from '../DropDown';
 import {internalMedicane} from '../FormData';
 import {FormInput, CheckBox} from '../FormInput';
 
-function Form2({navigation}) {
+function Form2({navigation, route}) {
+  const {form1, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [state, setState] = useState({
+    drugAllergies: '',
+    clinicName: '',
+    other1: '',
+    other2: '',
+    operationDate: '',
+    currentMedication: '',
+  });
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+  const form2 = {...state};
+
+  const handleContinue = () => {
+    const {
+      drugAllergies,
+      clinicName,
+      other1,
+      other2,
+      operationDate,
+      currentMedication,
+    } = state;
+    // if (
+    //   !drug ||
+    //   !clinicName ||
+    //   !service ||
+    //   !other1 ||
+    //   !other2 ||
+    //   !operationDate ||
+    //   !currentMedication
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('ImmigrationForm3', {
+      form1: form1,
+      form2: form2,
+      formName: formName,
+    });
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,6 +86,8 @@ function Form2({navigation}) {
           </Text>
         </View>
         <FormInput
+          state={state.drugAllergies}
+          setState={text => handleChange('drugAllergies', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -50,6 +97,8 @@ function Form2({navigation}) {
         />
 
         <FormInput
+          state={state.clinicName}
+          setState={text => handleChange('clinicName', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -106,6 +155,8 @@ function Form2({navigation}) {
         </View>
 
         <FormInput
+          state={state.other1}
+          setState={text => handleChange('other1', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -192,6 +243,8 @@ function Form2({navigation}) {
           <CheckBox text="Others" checkboxValue={'Others'} />
         </View>
         <FormInput
+          state={state.other2}
+          setState={text => handleChange('other2', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -201,6 +254,8 @@ function Form2({navigation}) {
           multiple={true}
         />
         <FormInput
+          state={state.operationDate}
+          setState={text => handleChange('operationDate', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -209,6 +264,8 @@ function Form2({navigation}) {
           label="Please list Operations and Dates of each"
         />
         <FormInput
+          state={state.currentMedication}
+          setState={text => handleChange('currentMedication', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -218,9 +275,7 @@ function Form2({navigation}) {
         />
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('ImmigrationForm3');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

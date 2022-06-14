@@ -7,17 +7,22 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import DropDown from '../../component/DropDown';
 import {appointments} from '../../component/FormData';
 import {FormInput} from '../../component/FormInput';
 import RedLongButton from '../../component/RedLongButton';
+import firebase from '../../configue/index';
+
 import {vh, vw} from '../../constaint';
 import {Calendar, CalendarProps} from 'react-native-calendars';
 import calendar from '../../assets/calendar.png';
 function AppointmentScreen({navigation}) {
-  const [genders, setGenders] = useState('');
+  const [appointmentData, setAppointmentData] = useState('');
   const [picDate, setPicDate] = useState(false);
+  const [load, setLoad] = useState(false);
+  // const [formData, setFormData] = useState([]);
 
   // const year = new Date().getFullYear().toLocaleString();
   // const month = new Date().getMonth() + 1;
@@ -31,7 +36,53 @@ function AppointmentScreen({navigation}) {
   today = yyyy + '-' + mm + '-' + dd;
   console.log(today);
   const [selectDate, setSelectDate] = useState(today);
-  console.log(selectDate);
+  let id = firebase.auth().currentUser.uid;
+
+  const formData = [];
+  const searchFormHandle = () => {
+    if (!selectDate || !appointmentData) {
+      alert('select all filters');
+    } else {
+      if (id) {
+        setLoad(true);
+        firebase
+          .database()
+          .ref(`users/${id}/${appointmentData}/${selectDate}`)
+          .on('value', snapshot => {
+            if (snapshot.val() == null) {
+              setLoad(false);
+              alert('No data found');
+            } else {
+              snapshot.forEach(function (childSnapshot) {
+                // console.log(childSnapshot);
+                var data = childSnapshot.val();
+                if (data) {
+                  setLoad(false);
+                  console.log(data);
+                  // console.log('data', Object.keys(data).length);
+                  formData.push(data);
+                  // console.log('formData', formData);
+
+                  alert('successfully data found');
+                  navigation.navigate('AppointmentListScreen', {
+                    data: formData,
+                  });
+                  // setLoad(false);
+                } else {
+                  setLoad(false);
+                  alert('No data found');
+                  console.log('no data');
+                }
+              });
+            }
+          });
+      } else {
+        setLoad(false);
+        console.log('No Any Form');
+        alert('No Any form');
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,20 +152,19 @@ function AppointmentScreen({navigation}) {
           />
         ) : null}
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={appointmentData}
+          setState={text => setAppointmentData(text)}
           data={appointments}
           label="Appointment For"
           placeholder="Select Your Appointment"
         />
 
         <View style={{marginVertical: 30}}>
-          <RedLongButton
-            onPress={() => {
-              navigation.navigate('AppointmentListScreen');
-            }}
-            buttonText="Apply"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton onPress={searchFormHandle} buttonText="Apply" />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

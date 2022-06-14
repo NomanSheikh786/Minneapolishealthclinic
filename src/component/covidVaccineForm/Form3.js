@@ -33,13 +33,58 @@ import {
 } from '../FormData';
 import {FormInput} from '../FormInput';
 
-function Form3({navigation}) {
+function Form3({navigation, route}) {
+  const {form1, form2, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [state, setState] = useState({
+    hivInfection: '',
+    bleedingDisorder: '',
+    pregnantOrBreastFeeding: '',
+    booster: '',
+    previousDose: '',
+  });
 
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const form3 = {...state};
+
+  const handleContinue = () => {
+    const {
+      hivInfection,
+      bleedingDisorder,
+      pregnantOrBreastFeeding,
+      booster,
+      previousDose,
+    } = state;
+    // if (
+    //   !drug ||
+    //   !clinicName ||
+    //   !service ||
+    //   !other1 ||
+    //   !other2 ||
+    //   !operationDate ||
+    //   !currentMedication
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('CovidVaccineForm4', {
+      form1: form1,
+      form2: form2,
+      form3: form3,
+      formName: formName,
+    });
+    // }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -57,7 +102,7 @@ function Form3({navigation}) {
           </Text>
         </View> */}
 
-        <DropDown
+        {/* <DropDown
           state={genders}
           setState={setGenders}
           data={ynd}
@@ -70,39 +115,39 @@ function Form3({navigation}) {
           data={ynd}
           label="Have you had a positive  test for COVID-19 or has a doctor ever told you that you had COVID-19?"
           placeholder="Select you had a positive  test for COVID-19?"
-        />
+        /> */}
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.hivInfection}
+          setState={text => handleChange('hivInfection', text)}
           data={ynd}
           label="Do you have a weakened immune system caused by something such as HIV infection or cancer or do you take immunosuppressive drugs or therapies?"
           placeholder="Select Do you have a weakened immune system?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.bleedingDisorder}
+          setState={text => handleChange('bleedingDisorder', text)}
           data={ynd}
           label="Do you have a bleeding disorder or are you taking a blood thinner?"
           placeholder="Select Do you have a bleeding disorder?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.pregnantOrBreastFeeding}
+          setState={text => handleChange('pregnantOrBreastFeeding', text)}
           data={ynd}
           label="Are you pregnant or breastfeeding?"
           placeholder="Select Are you pregnant or breastfeeding?"
         />
 
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.booster}
+          setState={text => handleChange('booster', text)}
           data={vaccine}
           label="What kind of booster did you have?"
           placeholder="Select What kind of booster did you have?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.previousDose}
+          setState={text => handleChange('previousDose', text)}
           data={yn}
           label="Have you received a previous dose of Covid -19 Vaccine?"
           placeholder="Select Have you received a previous dose of Covid -19?"
@@ -110,9 +155,7 @@ function Form3({navigation}) {
 
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('CovidVaccineForm4');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

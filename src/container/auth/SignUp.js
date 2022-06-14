@@ -33,6 +33,7 @@ const SignUp = ({navigation}) => {
   const [confirmpassword, setConfirmPassword] = useState('');
   const [Loading, setLoading] = useState(false);
   const [checkbox, setCheckbox] = useState(true);
+
   console.log(checkbox);
   const signUpUser = () => {
     if (

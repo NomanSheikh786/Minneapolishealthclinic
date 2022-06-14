@@ -36,12 +36,49 @@ import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
 
-function Form4({navigation}) {
+function Form4({navigation, route}) {
+  const {form1, form2, form3, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  // const [state, setState] = useState({
+  //   fname: '',
+  //   lname: '',
+  // });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  // const form4 = {...state};
+  const handleContinue = () => {
+    // const {fname, lname} = state;
+
+    // if (
+    // !exercise||
+    // !diet||
+    // !alcohol||
+    // !smoke||
+    // ! caffeine||
+    // !medicalHistory
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('CovidVaccineForm5', {
+      form1: form1,
+      form2: form2,
+      form3: form3,
+      // form4: form4,
+      formName: formName,
+    });
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -220,14 +257,22 @@ function Form4({navigation}) {
             Print Name (If someone other than patient to receive vaccine)
           </Text>
 
-          <FormInput placeholder="First Name" multiple={true} />
-          <FormInput placeholder="Last Name" multiple={true} />
+          {/* <FormInput
+            state={state.fname}
+            setState={text => handleChange('fname', text)}
+            placeholder="First Name"
+            multiple={true}
+          />
+          <FormInput
+            state={state.lname}
+            setState={text => handleChange('lname', text)}
+            placeholder="Last Name"
+            multiple={true}
+          /> */}
         </View>
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('CovidVaccineForm5');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

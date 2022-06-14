@@ -30,12 +30,68 @@ import {
 } from '../FormData';
 import {CheckBox, FormInput} from '../FormInput';
 
-function Form2({navigation}) {
+function Form2({navigation, route}) {
+  const {form1, formName} = route.params;
+
+  const [state, setState] = useState({
+    physician: '',
+    illness: '',
+    operationDate: '',
+    medicalHistory: '',
+    currentMedication: '',
+    drugAllergies: '',
+    medicalCond: '',
+    day: '',
+    month: '',
+    year: '',
+  });
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const form2 = {...state};
+
+  const handleContinue = () => {
+    const {
+      physician,
+      illness,
+      operationDate,
+      medicalHistory,
+      currentMedication,
+      drugAllergies,
+      medicalCond,
+      day,
+      month,
+      year,
+    } = state;
+    // if (
+    //   !drug ||
+    //   !clinicName ||
+    //   !service ||
+    //   !other1 ||
+    //   !other2 ||
+    //   !operationDate ||
+    //   !currentMedication
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('CovidTreatForm3', {
+      form1: form1,
+      form2: form2,
+      formName: formName,
+    });
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,7 +120,13 @@ function Form2({navigation}) {
           </Text>
         </View>
         <View style={{marginTop: 15}}>
-          <FormInput label="" placeholder="" multiple={true} />
+          <FormInput
+            state={state.physician}
+            setState={text => handleChange('physician', text)}
+            label=""
+            placeholder=""
+            multiple={true}
+          />
         </View>
         <View style={{marginVertical: 5}}>
           <Text
@@ -114,11 +176,15 @@ function Form2({navigation}) {
           />
         </View>
         <FormInput
+          state={state.illness}
+          setState={text => handleChange('illness', text)}
           placeholder="Type your Other Illnesses"
           label="Other Illnesses"
         />
 
         <FormInput
+          state={state.operationDate}
+          setState={text => handleChange('operationDate', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -128,6 +194,8 @@ function Form2({navigation}) {
         />
 
         <FormInput
+          state={state.medicalHistory}
+          setState={text => handleChange('medicalHistory', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -136,6 +204,8 @@ function Form2({navigation}) {
           label="Include other comments regarding your Medical History"
         />
         <FormInput
+          state={state.currentMedication}
+          setState={text => handleChange('currentMedication', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -144,6 +214,8 @@ function Form2({navigation}) {
           label="Please list your Current Medications"
         />
         <FormInput
+          state={state.drugAllergies}
+          setState={text => handleChange('drugAllergies', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -152,6 +224,8 @@ function Form2({navigation}) {
           label="Please list any drug allergies"
         />
         <FormInput
+          state={state.medicalCond}
+          setState={text => handleChange('medicalCond', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -173,22 +247,22 @@ function Form2({navigation}) {
               justifyContent: 'space-between',
             }}>
             <DropDown
-              state={months}
-              setState={setMonths}
+              state={state.month}
+              setState={text => handleChange('month', text)}
               placeholder="Month"
               data={month}
               direction={true}
             />
             <DropDown
-              state={days}
-              setState={setDays}
+              state={state.day}
+              setState={text => handleChange('day', text)}
               placeholder="Day"
               data={day}
               direction={true}
             />
             <DropDown
-              state={years}
-              setState={setYears}
+              state={state.year}
+              setState={text => handleChange('year', text)}
               placeholder="Year"
               data={year}
               direction={true}
@@ -198,9 +272,7 @@ function Form2({navigation}) {
 
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('CovidTreatForm3');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

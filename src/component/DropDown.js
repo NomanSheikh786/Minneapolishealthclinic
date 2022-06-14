@@ -24,7 +24,7 @@ function DropDown({
           selectedValue={state}
           accessibilityLabel={placeholder}
           placeholder={placeholder}
-          onValueChange={val => setState(val)}
+          onValueChange={setState}
           placeholderTextColor={'#5E6F88'}
           fontSize={12}
           p={3}
@@ -64,7 +64,7 @@ function DropDown({
             selectedValue={state}
             accessibilityLabel={placeholder}
             placeholder={placeholder}
-            onValueChange={val => setState(val)}
+            onValueChange={setState}
             placeholderTextColor={'#5E6F88'}
             fontSize={14}
             p={3}

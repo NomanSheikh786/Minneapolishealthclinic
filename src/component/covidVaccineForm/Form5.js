@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {
   CheckIcon,
@@ -30,7 +31,10 @@ import {
 } from '../FormData';
 import {FormInput} from '../FormInput';
 import {Calendar, CalendarProps} from 'react-native-calendars';
-function Form5({navigation}) {
+import {SubmitData} from '../../configue/FirebaseSubmitForm';
+function Form5({navigation, route}) {
+  const {form1, form2, form3, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
@@ -39,6 +43,7 @@ function Form5({navigation}) {
   const [checkTime, setCheckTime] = useState(true);
 
   const [selectDate, setSelectDate] = useState('');
+  const [load, setLoad] = useState(false);
 
   // const onDayPress: CalendarProps = useCallback(day => {
   //   setSelected(day.dateString);
@@ -54,6 +59,22 @@ function Form5({navigation}) {
   //     }
   //   };
   // }, [selected]);
+  const finalForm = {...form1, ...form2, ...form3};
+
+  const handleSubmit = () => {
+    // if (
+    // !exercise||
+    // !diet||
+    // !alcohol||
+    // !smoke||
+    // ! caffeine||
+    // !medicalHistory
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    SubmitData(finalForm, setLoad, navigation, formName);
+    // }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -132,19 +153,27 @@ function Form5({navigation}) {
         </View>
 
         <View style={{marginVertical: 30}}>
-          <RedLongButton
-            onPress={() => {
-              navigation.navigate('FormSubmit', {
-                title: 'Appointment Confirmed',
-                text: 'Thank you for scheduling your vaccine appointment!',
-                date: 'Tuesday, May 31,2022',
-                time: '12:45-1:15PM',
-                location: 'America/Chicago',
-                button: true,
-              });
-            }}
-            buttonText="Submit"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton
+              onPress={
+                handleSubmit
+
+                //   () => {
+                //   navigation.navigate('FormSubmit', {
+                //     title: 'Appointment Confirmed',
+                //     text: 'Thank you for scheduling your vaccine appointment!',
+                //     date: 'Tuesday, May 31,2022',
+                //     time: '12:45-1:15PM',
+                //     location: 'America/Chicago',
+                //     button: true,
+                //   });
+                // }
+              }
+              buttonText="Submit"
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

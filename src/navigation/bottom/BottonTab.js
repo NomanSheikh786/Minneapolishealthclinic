@@ -56,6 +56,7 @@ import PreOpForm3 from '../../component/preOpForm/Form3';
 import FormSubmit from '../../component/FormSubmit';
 import ResetPassword from '../../container/app/ResetPassword/ResetPassword';
 import PaymentMethod from '../../container/app/PaymentMethod';
+import CheckEmailScreen from '../../container/app/ResetPassword/CheckYourEmailAddress';
 
 function Tab() {
   const Tab = createBottomTabNavigator();
@@ -310,6 +311,11 @@ const BottomNavigation = () => {
       <Stack.Screen
         name="ResetPassword"
         component={ResetPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CheckEmailScreen"
+        component={CheckEmailScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

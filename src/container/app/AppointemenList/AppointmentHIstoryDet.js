@@ -12,9 +12,7 @@ import {
 } from 'react-native';
 import {vh, vw} from '../../../constaint';
 import star from '../../../assets/star.png';
-import camera from '../../../assets/camera.png';
 import time from '../../../assets/time.png';
-import cameraWhite from '../../../assets/camera-white.png';
 import day from '../../../assets/day.png';
 import fee from '../../../assets/fee.png';
 

@@ -1,5 +1,12 @@
-import {View, Text, SafeAreaView, TouchableOpacity, Image,ActivityIndicator} from 'react-native';
-import React,{useState} from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useState} from 'react';
 import InputType from '../../../component/InputType';
 import {vh, vw} from '../../../constaint/index';
 import RedLongButton from '../../../component/RedLongButton';
@@ -7,32 +14,33 @@ import {HStack, Checkbox, Center, NativeBaseProvider} from 'native-base';
 import firebase from 'firebase';
 
 export default function ForgotPassword({navigation}) {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState('');
 
+  const Forgetpassword = () => {
+    if (email == '') {
+      alert('Fill This blank');
+    } else {
+      setLoading(true);
+      firebase
+        .auth()
+        .sendPasswordResetEmail(email)
+        .then(function (user) {
+          setLoading(false);
+          alert('Please Check Your Email...');
 
-const [email, setEmail] = useState ("")
-const [loading, setLoading] = useState ("")
+          setEmail('');
 
-const Forgetpassword = () =>{
-  if (email == ""){
-    alert("Fill This blank")
-    
-  }
-  else{
-    setLoading(true);
-    firebase.auth().sendPasswordResetEmail(email)
-    .then(function (user){
-      setLoading(false);
-      alert("Please Check Your Email...")
-      setEmail('');
-    })
-    .catch(function(e){
-      setLoading(false);
-      console.log(e)
-    })
-  }
-  
-  
-}
+          setTimeout(() => {
+            navigation.navigate('CheckEmailScreen');
+          }, 1500);
+        })
+        .catch(function (e) {
+          setLoading(false);
+          alert(e);
+        });
+    }
+  };
 
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
@@ -75,7 +83,8 @@ const Forgetpassword = () =>{
             Email
           </Text>
           <View style={{alignItems: 'center'}}>
-            <InputType placeholder="Enter Email Address"
+            <InputType
+              placeholder="Enter Email Address"
               state={email}
               setState={setEmail}
             />
@@ -83,12 +92,11 @@ const Forgetpassword = () =>{
         </View>
 
         <View style={{marginTop: vh * 0.04}}>
-          {loading ? (<ActivityIndicator color={'orange'} size={'large'} />) :  ( <RedLongButton
-            buttonText="Send me now"
-            onPress={Forgetpassword}
-          />)}
-
-        
+          {loading ? (
+            <ActivityIndicator color={'orange'} size={'large'} />
+          ) : (
+            <RedLongButton buttonText="Send me now" onPress={Forgetpassword} />
+          )}
         </View>
       </View>
     </SafeAreaView>

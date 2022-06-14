@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {
   CheckIcon,
@@ -32,14 +33,52 @@ import {
 import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
+import {SubmitData} from '../../configue/FirebaseSubmitForm';
 
-function Form3({navigation}) {
+function Form3({navigation, route}) {
+  const {form1, form2, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [load, setLoad] = useState(false);
 
+  const [state, setState] = useState({
+    exercise: '',
+    diet: '',
+    alcohol: '',
+    smoke: '',
+    caffeine: '',
+    medicalHistory: '',
+  });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const form3 = {...state};
+  const finalForm = {...form1, ...form2, ...form3};
+  const handleSubmit = () => {
+    const {exercise, diet, alcohol, smoke, caffeine, medicalHistory} = state;
+
+    // if (
+    // !exercise||
+    // !diet||
+    // !alcohol||
+    // !smoke||
+    // ! caffeine||
+    // !medicalHistory
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    SubmitData(finalForm, setLoad, navigation, formName);
+    // }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -51,36 +90,36 @@ function Form3({navigation}) {
           </Text>
         </View>
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.exercise}
+          setState={text => handleChange('exercise', text)}
           data={exerciseDays}
           label="Exercise"
           placeholder="Select Your Exercise"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.diet}
+          setState={text => handleChange('diet', text)}
           data={dietFollow}
           label="Any particular diet you follow?"
           placeholder="Select Your particular diet you follow"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.alcohol}
+          setState={text => handleChange('alcohol', text)}
           data={alcoholCheck}
           label="Alcohol Consumption"
           placeholder="Select Your Alcohol Consumption"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.smoke}
+          setState={text => handleChange('smoke', text)}
           data={smokeCheck}
           label="Do you Smoke?"
           placeholder="Select Do you Smoke?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.caffeine}
+          setState={text => handleChange('caffeine', text)}
           data={caffeineCheck}
           label="Caffeine Consumption"
           placeholder="Select Your Caffeine Consumption"
@@ -122,6 +161,8 @@ function Form3({navigation}) {
         </View>
 
         <FormInput
+          state={state.medicalHistory}
+          setState={text => handleChange('medicalHistory', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -182,16 +223,11 @@ function Form3({navigation}) {
         </View>
 
         <View style={{marginVertical: 20}}>
-          <RedLongButton
-            onPress={() => {
-              // navigation.navigate('FormSubmit', {
-              //   title: 'Thank You!',
-              //   text: 'Your submission has been received',
-              // });
-              console.log('Immigration Form Submit');
-            }}
-            buttonText="Submit"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton onPress={handleSubmit} buttonText="Submit" />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -31,7 +31,7 @@ import {
 } from '../FormData';
 import {FormInput} from '../FormInput';
 import {Calendar, CalendarProps} from 'react-native-calendars';
-function Form1({navigation}) {
+function Form1({navigation, formName}) {
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
@@ -39,7 +39,67 @@ function Form1({navigation}) {
   const [ques, setQues] = useState('');
   const [checkTime, setCheckTime] = useState(true);
 
-  const [selectDate, setSelectDate] = useState('');
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  const [selectDate, setSelectDate] = useState(today);
+  const [appointment, setAppointment] = useState('');
+  const [checkTime1, setCheckTime1] = useState(false);
+  const [checkTime2, setCheckTime2] = useState(false);
+  const [checkTime3, setCheckTime3] = useState(false);
+  const [checkTime4, setCheckTime4] = useState(false);
+  const [checkTime5, setCheckTime5] = useState(false);
+  const [checkTime6, setCheckTime6] = useState(false);
+  const [checkTime7, setCheckTime7] = useState(false);
+  const [checkTime8, setCheckTime8] = useState(false);
+  const [checkTime9, setCheckTime9] = useState(false);
+
+  const times = {
+    checkTime1,
+    checkTime2,
+    checkTime3,
+    checkTime4,
+    checkTime5,
+    checkTime6,
+    checkTime7,
+    checkTime8,
+    checkTime9,
+  };
+  const form1 = {...times, selectDate, appointment};
+  console.log('form1', form1);
+  const handleContinue = () => {
+    // if (
+    //   !gender ||
+    //   !fname ||
+    //   !lname ||
+    //   !day ||
+    //   !month ||
+    //   !year ||
+    //   !height ||
+    //   !email ||
+    //   !phone ||
+    //   !streetAddress1 ||
+    //   !streetAddress2 ||
+    //   !city ||
+    //   !province ||
+    //   !postal ||
+    //   !ques ||
+    //   !weight ||
+    //   !visit ||
+    //   !other
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+
+    navigation.navigate('CovidVaccineForm2', {
+      form1: form1,
+      formName: formName,
+    });
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -134,9 +194,10 @@ function Form1({navigation}) {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => setCheckTime(!checkTime)}
+            activeOpacity={0.9}
+            onPress={() => setCheckTime1(!checkTime1)}
             style={{
-              backgroundColor: checkTime ? '#FE284D' : '#B2BAC6',
+              backgroundColor: checkTime1 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -146,8 +207,10 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>9:15 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime2(!checkTime2)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime2 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -157,8 +220,11 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>9:30 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime3(!checkTime3)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime3 ? '#FE284D' : '#B2BAC6',
+
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -176,9 +242,10 @@ function Form1({navigation}) {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => setCheckTime(!checkTime)}
+            activeOpacity={0.9}
+            onPress={() => setCheckTime4(!checkTime4)}
             style={{
-              backgroundColor: checkTime ? '#FE284D' : '#B2BAC6',
+              backgroundColor: checkTime4 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -188,8 +255,11 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>10:00 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime5(!checkTime5)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime5 ? '#FE284D' : '#B2BAC6',
+
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -199,8 +269,11 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>10:15 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime6(!checkTime6)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime6 ? '#FE284D' : '#B2BAC6',
+
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -218,9 +291,10 @@ function Form1({navigation}) {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => setCheckTime(!checkTime)}
+            activeOpacity={0.9}
+            onPress={() => setCheckTime7(!checkTime7)}
             style={{
-              backgroundColor: checkTime ? '#FE284D' : '#B2BAC6',
+              backgroundColor: checkTime7 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -230,8 +304,10 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>10:45 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime8(!checkTime8)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime8 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -241,8 +317,10 @@ function Form1({navigation}) {
             <Text style={{color: '#FFF'}}>11:00 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime9(!checkTime9)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime9 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -254,18 +332,16 @@ function Form1({navigation}) {
         </View>
 
         <DropDown
-          state={genders}
-          setState={setGenders}
-          data={[covidCheck]}
+          state={appointment}
+          setState={text => setAppointment(text)}
+          data={covidCheck}
           label="Just to confirm, What type of appointment
           do you need?"
           placeholder="Select what type of appointment do you need"
         />
         <View style={{marginVertical: 30}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('CovidVaccineForm2');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

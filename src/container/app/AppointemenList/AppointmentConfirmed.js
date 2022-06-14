@@ -11,11 +11,18 @@ import {Appointmentdata} from '../../../component/FormData';
 import {vh, vw} from '../../../constaint';
 import time from '../../../assets/time.png';
 import Calendar_check from '../../../assets/Calendar_check.png';
-function AppointmentConfirmed(props) {
+function AppointmentConfirmed({data}) {
+  const doctorData = {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '10 Jun 2022',
+    time: '09:15 PM',
+    image: require('../../../assets/profile.png'),
+  };
   return (
     <View style={styles.container}>
       <FlatList
-        data={Appointmentdata}
+        data={data.filter(item => item.formStatus == true)}
         contentContainerStyle={{paddingBottom: 70}}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, ind) => ind.toString()}
@@ -42,7 +49,7 @@ function AppointmentConfirmed(props) {
                     marginVertical: vh / 35,
                   }}>
                   <Image
-                    source={item.image}
+                    source={doctorData.image}
                     resizeMode="contain"
                     style={{borderRadius: 7, width: 65, height: 65}}
                   />
@@ -56,12 +63,12 @@ function AppointmentConfirmed(props) {
                   }}>
                   <Text
                     style={{color: '#000', fontWeight: 'bold', fontSize: 16}}>
-                    {item.title}
+                    {doctorData.title}
                   </Text>
 
                   <Text
                     style={{color: '#5E6F88', fontSize: 14, marginVertical: 5}}>
-                    {item.text}
+                    {doctorData.text}
                   </Text>
                   <View
                     style={{
@@ -84,7 +91,7 @@ function AppointmentConfirmed(props) {
                         fontWeight: '500',
                         marginLeft: 5,
                       }}>
-                      10 Jun 2022
+                      {doctorData.date}
                     </Text>
                     <Image
                       source={time}
@@ -97,7 +104,7 @@ function AppointmentConfirmed(props) {
                         fontWeight: '500',
                         marginLeft: 5,
                       }}>
-                      09:15 PM
+                      {doctorData.time}
                     </Text>
                   </View>
                   <TouchableOpacity

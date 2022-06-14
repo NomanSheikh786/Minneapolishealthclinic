@@ -12,7 +12,9 @@ import {FormInput} from '../../component/FormInput';
 import {vh, vw} from '../../constaint';
 import AppointmentTabs from './AppointemenList';
 
-function AppointmentListScreen(props) {
+function AppointmentListScreen({route, navigation}) {
+  const {data} = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{width: vw - 40, alignSelf: 'center'}}>
@@ -61,7 +63,7 @@ function AppointmentListScreen(props) {
         </View>
       </View>
 
-      <AppointmentTabs />
+      <AppointmentTabs data={data} navigation={navigation} />
     </SafeAreaView>
   );
 }

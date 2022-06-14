@@ -17,21 +17,24 @@ function FormScreen({navigation, route}) {
       {state.name == 'Medical Tourism' ||
       state.name == 'Primary Care' ||
       state.name == 'Aesthetic Services' ? (
-        <PrimaryForm1 navigation={navigation} />
+        <PrimaryForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Medical Weight Loss' ? (
-        <MedicalForm1 navigation={navigation} />
+        <MedicalForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Covid-19 Testing' ? (
-        <CovidTestForm1 navigation={navigation} />
+        <CovidTestForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Covid-19 Treatment' ? (
-        <CovidTreatForm1 navigation={navigation} />
+        <CovidTreatForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Covid-19 Vaccine Form' ? (
-        <CovidVaccineForm1 navigation={navigation} />
+        <CovidVaccineForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Immigration Exams & Forms' ? (
-        <ImmigrationForm1 navigation={navigation} />
+        <ImmigrationForm1 navigation={navigation} formName={state.name} />
       ) : state.name == 'Lipocel Appointment' ? (
-        <LipocelAppointmentForm1 navigation={navigation} />
+        <LipocelAppointmentForm1
+          navigation={navigation}
+          formName={state.name}
+        />
       ) : state.name == 'Pre-Op Evaluations' ? (
-        <PreOpForm1 navigation={navigation} />
+        <PreOpForm1 navigation={navigation} formName={state.name} />
       ) : null}
     </>
   );

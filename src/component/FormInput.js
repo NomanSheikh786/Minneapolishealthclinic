@@ -9,7 +9,7 @@ function FormInput(props) {
         <TextInput
           style={{
             fontSize: 14,
-            color: '#5E6F88',
+            color: '#626262',
             borderWidth: 1,
             borderColor: '#B2BAC6',
             borderRadius: 8,
@@ -22,10 +22,10 @@ function FormInput(props) {
           secureTextEntry={props.secureTextEntry}
           placeholder={props.placeholder}
           placeholderTextColor="#5E6F88"
-          value={props.value}
+          value={props.state}
           multiline={props.multiline}
           numberOfLines={props.numberOfLines}
-          // onChangeText={val => props.changeState(val)}
+          onChangeText={props.setState}
         />
       ) : (
         <View style={{marginVertical: 5}}>
@@ -38,7 +38,7 @@ function FormInput(props) {
           <TextInput
             style={{
               fontSize: 14,
-              color: '#5E6F88',
+              color: '#626262',
               borderWidth: 1,
               borderColor: '#B2BAC6',
               borderRadius: 8,
@@ -49,10 +49,10 @@ function FormInput(props) {
             secureTextEntry={props.secureTextEntry}
             placeholder={props.placeholder}
             placeholderTextColor="#5E6F88"
-            value={props.value}
+            value={props.state}
             multiline={props.multiline}
             numberOfLines={props.numberOfLines}
-            // onChangeText={val => props.changeState(val)}
+            onChangeText={props.setState}
           />
         </View>
       )}
@@ -60,7 +60,7 @@ function FormInput(props) {
   );
 }
 
-const CheckBox = ({text, checkboxValue}) => {
+const CheckBox = ({text, checkboxValue, setState, state}) => {
   return (
     <View
       style={{
@@ -70,7 +70,8 @@ const CheckBox = ({text, checkboxValue}) => {
       }}>
       <Checkbox
         size={'sm'}
-        value={checkboxValue}
+        value={state}
+        onChange={setState}
         accessibilityLabel={checkboxValue}>
         <Text style={{fontSize: 14}}>{text}</Text>
       </Checkbox>

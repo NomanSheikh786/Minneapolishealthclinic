@@ -32,12 +32,98 @@ import {
 } from '../FormData';
 import {CheckBox, FormInput} from '../FormInput';
 
-function Form1({navigation}) {
+function Form1({navigation, formName}) {
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [state, setState] = useState({
+    fname: '',
+    lname: '',
+    day: '',
+    month: '',
+    year: '',
+    phone: '',
+    email: '',
+    streetAddress1: '',
+    streetAddress2: '',
+    city: '',
+    province: '',
+    postal: '',
+    country: '',
+    allergicReaction: '',
+    typeOfAllergic: '',
+    currentMedication: '',
+    typeOfMedication: '',
+    pregnantOrBreastFeeding: '',
+    cardivascularDisease: '',
+    bloodPressure: '',
+    Sufferepilepsy: '',
+    abdomenSurgery: '',
+    transplant: '',
+    currentInfection: '',
+
+    // gender: '',
+    // ethnicty: '',
+    // height: '',
+    // weight: '',
+    // covidTest: '',
+    // symptoms: '',
+  });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleContinue = () => {
+    const {
+      fname,
+      lname,
+      day,
+      month,
+      year,
+      phone,
+      email,
+      streetAddress1,
+      streetAddress2,
+      city,
+      province,
+      postal,
+      country,
+      allergicReaction,
+      typeOfAllergic,
+      currentMedication,
+      typeOfMedication,
+      pregnantOrBreastFeeding,
+      cardivascularDisease,
+      bloodPressure,
+      Sufferepilepsy,
+      abdomenSurgery,
+      transplant,
+      currentInfection,
+    } = state;
+    // if (
+    //   !drug ||
+    //   !clinicName ||
+    //   !service ||
+    //   !other1 ||
+    //   !other2 ||
+    //   !operationDate ||
+    //   !currentMedication
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('LipocelAppointmentForm2', {
+      form1: state,
+      formName: formName,
+    });
+
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,8 +159,18 @@ function Form1({navigation}) {
             Name
           </Text>
 
-          <FormInput placeholder="First Name" multiple={true} />
-          <FormInput placeholder="Last Name" multiple={true} />
+          <FormInput
+            state={state.fname}
+            setState={text => handleChange('fname', text)}
+            placeholder="First Name"
+            multiple={true}
+          />
+          <FormInput
+            state={state.lname}
+            setState={text => handleChange('lname', text)}
+            placeholder="Last Name"
+            multiple={true}
+          />
         </View>
 
         <View style={{marginVertical: 5}}>
@@ -91,22 +187,22 @@ function Form1({navigation}) {
               justifyContent: 'space-between',
             }}>
             <DropDown
-              state={months}
-              setState={setMonths}
+              state={state.month}
+              setState={text => handleChange('month', text)}
               placeholder="Month"
               data={month}
               direction={true}
             />
             <DropDown
-              state={days}
-              setState={setDays}
+              state={state.day}
+              setState={text => handleChange('day', text)}
               placeholder="Day"
               data={day}
               direction={true}
             />
             <DropDown
-              state={years}
-              setState={setYears}
+              state={state.year}
+              setState={text => handleChange('year', text)}
               placeholder="Year"
               data={year}
               direction={true}
@@ -117,8 +213,18 @@ function Form1({navigation}) {
           placeholder="Type Height (Feet and Inches)"
           label="Height (Feet and Inches)"
         /> */}
-        <FormInput placeholder="XXXX-XXXX-XXX" label="Phone Number" />
-        <FormInput placeholder="patient@example.com" label="E-mail Address" />
+        <FormInput
+          state={state.phone}
+          setState={text => handleChange('phone', text)}
+          placeholder="XXXX-XXXX-XXX"
+          label="Phone Number"
+        />
+        <FormInput
+          state={state.email}
+          setState={text => handleChange('email', text)}
+          placeholder="patient@example.com"
+          label="E-mail Address"
+        />
 
         <View style={{marginVertical: 5}}>
           <Text
@@ -128,14 +234,39 @@ function Form1({navigation}) {
             Address
           </Text>
 
-          <FormInput placeholder="Steet Address" multiple={true} />
-          <FormInput placeholder="Street Address Line 2" multiple={true} />
-          <FormInput placeholder="City" multiple={true} />
-          <FormInput placeholder="State / Province" multiple={true} />
-          <FormInput placeholder="Postal / Zip Code" multiple={true} />
+          <FormInput
+            state={state.streetAddress1}
+            setState={text => handleChange('streetAddress1', text)}
+            placeholder="Steet Address"
+            multiple={true}
+          />
+          <FormInput
+            state={state.streetAddress2}
+            setState={text => handleChange('streetAddress2', text)}
+            placeholder="Street Address Line 2"
+            multiple={true}
+          />
+          <FormInput
+            state={state.city}
+            setState={text => handleChange('city', text)}
+            placeholder="City"
+            multiple={true}
+          />
+          <FormInput
+            state={state.province}
+            setState={text => handleChange('province', text)}
+            placeholder="State / Province"
+            multiple={true}
+          />
+          <FormInput
+            state={state.postal}
+            setState={text => handleChange('postal', text)}
+            placeholder="Postal / Zip Code"
+            multiple={true}
+          />
           <DropDown
-            state={genders}
-            setState={setGenders}
+            state={state.country}
+            setState={text => handleChange('country', text)}
             data={country}
             placeholder="Select Country"
             noLabel={true}
@@ -159,14 +290,16 @@ function Form1({navigation}) {
           <CheckBox text="Hips" checkboxValue={'Hips'} />
         </View>
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.allergicReaction}
+          setState={text => handleChange('allergicReaction', text)}
           data={yn}
           label="Do you have any allergies?"
           placeholder="Select Do you have any allergies?"
         />
 
         <FormInput
+          state={state.typeOfAllergic}
+          setState={text => handleChange('typeOfAllergic', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -175,14 +308,16 @@ function Form1({navigation}) {
           label="What type of allergies do you have?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.currentMedication}
+          setState={text => handleChange('currentMedication', text)}
           data={yn}
           label="Are you currently taking any medications?"
           placeholder="Select Are you currently taking any medications?"
         />
 
         <FormInput
+          state={state.typeOfMedication}
+          setState={text => handleChange('typeOfMedication', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -191,50 +326,50 @@ function Form1({navigation}) {
           label="If yes, what are the medications you’re currently having?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.pregnantOrBreastFeeding}
+          setState={text => handleChange('pregnantOrBreastFeeding', text)}
           data={yn}
           label="Are you pregnant or breastfeeding?"
           placeholder="Select Are you pregnant or breastfeeding?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.cardivascularDisease}
+          setState={text => handleChange('cardivascularDisease', text)}
           data={yn}
           label="Do you have any cardiovascular disease?"
           placeholder="Select Do you have any cardiovascular disease?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.bloodPressure}
+          setState={text => handleChange('bloodPressure', text)}
           data={yn}
           label="Do you have a high blood pressure or hypertension?"
           placeholder="Select Do you have a high blood pressure or hypertension?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.Sufferepilepsy}
+          setState={text => handleChange('Sufferepilepsy', text)}
           data={yn}
           label="Do you suffer from epilepsy?"
           placeholder="Select Do you suffer from epilepsy?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.abdomenSurgery}
+          setState={text => handleChange('abdomenSurgery', text)}
           data={yn}
           label="Did you undergo any surgery in the abdomen before?"
           placeholder="Select Did you undergo any surgery in the abdomen before?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.transplant}
+          setState={text => handleChange('transplant', text)}
           data={yn}
           label="Did you undergo any transplant?"
           placeholder="Select Did you undergo any transplant?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.currentInfection}
+          setState={text => handleChange('currentInfection', text)}
           data={yn}
           label="Do you have any current infection?"
           placeholder="Select Do you have any current infection?"
@@ -242,9 +377,7 @@ function Form1({navigation}) {
 
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('LipocelAppointmentForm2');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

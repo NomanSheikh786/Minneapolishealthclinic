@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {
   CheckIcon,
@@ -34,15 +35,74 @@ import {
 } from '../FormData';
 import {CheckBox, FormInput} from '../FormInput';
 import {Calendar, CalendarProps} from 'react-native-calendars';
-function Form2({navigation}) {
+import {SubmitData} from '../../configue/FirebaseSubmitForm';
+function Form2({navigation, route}) {
+  const {form1, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
-  const [checkTime, setCheckTime] = useState(true);
 
-  const [selectDate, setSelectDate] = useState('');
+  const [load, setLoad] = useState(false);
+
+  const [state, setState] = useState({
+    timeZone: '',
+    day: '',
+    month: '',
+    year: '',
+    covidVaccine: '',
+  });
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  const [selectDate, setSelectDate] = useState(today);
+  const [appointment, setAppointment] = useState('');
+  const [checkTime1, setCheckTime1] = useState(false);
+  const [checkTime2, setCheckTime2] = useState(false);
+  const [checkTime3, setCheckTime3] = useState(false);
+  const [checkTime4, setCheckTime4] = useState(false);
+  const [checkTime5, setCheckTime5] = useState(false);
+  const [checkTime6, setCheckTime6] = useState(false);
+
+  const times = {
+    checkTime1,
+    checkTime2,
+    checkTime3,
+    checkTime4,
+    checkTime5,
+    checkTime6,
+  };
+
+  const form2 = {...times, selectDate, ...state};
+  const finalForm = {...form1, ...form2};
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    // if (
+    // !exercise||
+    // !diet||
+    // !alcohol||
+    // !smoke||
+    // ! caffeine||
+    // !medicalHistory
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    SubmitData(finalForm, setLoad, navigation, formName);
+    // }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -140,8 +200,8 @@ function Form2({navigation}) {
           <Switch colorScheme={'primary'} size="sm" />
         </View>
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.timeZone}
+          setState={text => handleChange('timeZone', text)}
           data={timeZone}
           dataObj={true}
           label=""
@@ -181,9 +241,10 @@ function Form2({navigation}) {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => setCheckTime(!checkTime)}
+            activeOpacity={0.9}
+            onPress={() => setCheckTime1(!checkTime1)}
             style={{
-              backgroundColor: checkTime ? '#FE284D' : '#B2BAC6',
+              backgroundColor: checkTime1 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -193,8 +254,10 @@ function Form2({navigation}) {
             <Text style={{color: '#FFF'}}>9:15 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime2(!checkTime2)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime2 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -204,8 +267,10 @@ function Form2({navigation}) {
             <Text style={{color: '#FFF'}}>9:30 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime3(!checkTime3)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime3 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -223,9 +288,11 @@ function Form2({navigation}) {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            onPress={() => setCheckTime(!checkTime)}
+            activeOpacity={0.9}
+            onPress={() => setCheckTime4(!checkTime4)}
             style={{
-              backgroundColor: checkTime ? '#FE284D' : '#B2BAC6',
+              backgroundColor: checkTime4 ? '#FE284D' : '#B2BAC6',
+
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -235,8 +302,10 @@ function Form2({navigation}) {
             <Text style={{color: '#FFF'}}>10:00 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime5(!checkTime5)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime5 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -246,8 +315,10 @@ function Form2({navigation}) {
             <Text style={{color: '#FFF'}}>10:15 AM</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => setCheckTime6(!checkTime6)}
             style={{
-              backgroundColor: '#FE284D',
+              backgroundColor: checkTime6 ? '#FE284D' : '#B2BAC6',
               width: vw / 5,
               height: vh / 20,
               borderRadius: 5,
@@ -271,22 +342,22 @@ function Form2({navigation}) {
               justifyContent: 'space-between',
             }}>
             <DropDown
-              state={months}
-              setState={setMonths}
+              state={state.month}
+              setState={text => handleChange('month', text)}
               placeholder="Month"
               data={month}
               direction={true}
             />
             <DropDown
-              state={days}
-              setState={setDays}
+              state={state.day}
+              setState={text => handleChange('day', text)}
               placeholder="Day"
               data={day}
               direction={true}
             />
             <DropDown
-              state={years}
-              setState={setYears}
+              state={state.year}
+              setState={text => handleChange('year', text)}
               placeholder="Year"
               data={year}
               direction={true}
@@ -295,6 +366,8 @@ function Form2({navigation}) {
         </View>
 
         <FormInput
+          state={state.covidVaccine}
+          setState={text => handleChange('covidVaccine', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -303,15 +376,11 @@ function Form2({navigation}) {
           label="Have you had your COVID Vaccine? If yes, which one? If no you will have to do a COVID test before your procedure."
         />
         <View style={{marginVertical: 30}}>
-          <RedLongButton
-            onPress={() => {
-              navigation.navigate('FormSubmit', {
-                title: 'Thank You!',
-                text: 'Your submission has been received',
-              });
-            }}
-            buttonText="Submit"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton onPress={handleSubmit} buttonText="Submit" />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

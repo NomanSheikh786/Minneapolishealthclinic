@@ -4,7 +4,7 @@ import AppointmentConfirmed from '../AppointemenList/AppointmentConfirmed';
 import AppointmentPending from '../AppointemenList/AppointmentPending';
 import AppointmentHistory from '../AppointemenList/AppointmentHistory';
 
-const AppointmentTabs = () => {
+const AppointmentTabs = ({data, navigation}) => {
   const Tab = createMaterialTopTabNavigator();
 
   return (
@@ -20,9 +20,21 @@ const AppointmentTabs = () => {
         },
         tabBarIndicatorStyle: {backgroundColor: '#FE284D', height: 2},
       }}>
-      <Tab.Screen name="CONFIRMED" component={AppointmentConfirmed} />
-      <Tab.Screen name="PENDING" component={AppointmentPending} />
-      <Tab.Screen name="HISTORY" component={AppointmentHistory} />
+      <Tab.Screen
+        name="CONFIRMED"
+        children={() => <AppointmentConfirmed data={data} />}
+      />
+      <Tab.Screen
+        name="PENDING"
+        children={() => <AppointmentPending data={data} />}
+      />
+      <Tab.Screen
+        name="HISTORY"
+        children={() => (
+          <AppointmentHistory navigation={navigation} data={data} />
+        )}
+        // component={AppointmentHistory}
+      />
     </Tab.Navigator>
   );
 };

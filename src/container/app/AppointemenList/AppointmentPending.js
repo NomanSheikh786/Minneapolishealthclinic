@@ -11,11 +11,19 @@ import {Appointmentdata} from '../../../component/FormData';
 import {vh, vw} from '../../../constaint';
 import time from '../../../assets/time.png';
 import Calendar_check from '../../../assets/Calendar_check.png';
-function AppointmentPending(props) {
+function AppointmentPending({data}) {
+  const doctorData = {
+    title: 'Grace Totoe, Md, FACP',
+    text: 'Telemedicine Doctor',
+    date: '10 Jun 2022',
+    time: '09:15 PM',
+    image: require('../../../assets/profile.png'),
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={Appointmentdata}
+        data={data.filter(item => item.formStatus == false)}
         contentContainerStyle={{paddingBottom: 70}}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, ind) => ind.toString()}
@@ -42,7 +50,7 @@ function AppointmentPending(props) {
                     marginVertical: vh / 35,
                   }}>
                   <Image
-                    source={item.image}
+                    source={doctorData.image}
                     resizeMode="contain"
                     style={{borderRadius: 7, width: 65, height: 65}}
                   />
@@ -56,12 +64,12 @@ function AppointmentPending(props) {
                   }}>
                   <Text
                     style={{color: '#000', fontWeight: 'bold', fontSize: 16}}>
-                    {item.title}
+                    {doctorData.title}
                   </Text>
 
                   <Text
                     style={{color: '#5E6F88', fontSize: 14, marginVertical: 5}}>
-                    {item.text}
+                    {doctorData.text}
                   </Text>
                   <View
                     style={{
@@ -84,7 +92,7 @@ function AppointmentPending(props) {
                         fontWeight: '500',
                         marginLeft: 5,
                       }}>
-                      10 Jun 2022
+                      {doctorData.date}
                     </Text>
                     <Image
                       source={time}
@@ -97,13 +105,13 @@ function AppointmentPending(props) {
                         fontWeight: '500',
                         marginLeft: 5,
                       }}>
-                      09:15 PM
+                      {doctorData.time}
                     </Text>
                   </View>
                   <View
                     style={{
                       flexDirection: 'row',
-                      justifyContent: 'flex-end',
+                      justifyContent: 'flex-start',
                       marginRight: 10,
                     }}>
                     <TouchableOpacity
@@ -121,10 +129,10 @@ function AppointmentPending(props) {
                         elevation: 3,
                       }}>
                       <Text style={{color: '#5E6F88', fontWeight: '500'}}>
-                        Cancel
+                        Pending
                       </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                       style={{
                         backgroundColor: '#27B552',
                         width: vw / 5,
@@ -141,7 +149,7 @@ function AppointmentPending(props) {
                       <Text style={{color: '#FFF', fontWeight: '500'}}>
                         Play
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
               </TouchableOpacity>

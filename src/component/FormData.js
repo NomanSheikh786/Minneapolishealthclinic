@@ -143,6 +143,7 @@ const timeZone = [
 ];
 
 const appointments = [
+  'Medical Tourism',
   'Primary Care',
   'Aesthetic Services',
   'Medical Weight Loss',

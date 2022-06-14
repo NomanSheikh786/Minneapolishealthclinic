@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import {vh, vw} from '../../constaint';
 import star from '../../assets/star.png';
-import camera from '../../assets/camera.png';
+// import camera from '../../assets/camera.png';
 import time from '../../assets/time.png';
-import cameraWhite from '../../assets/camera-white.png';
+// import cameraWhite from '../../assets/camera-white.png';
 import day from '../../assets/day.png';
 import fee from '../../assets/fee.png';
 
@@ -144,7 +144,7 @@ function DoctorListingDetailsScreen({navigation, route}) {
             experience in the healthcare industry...
           </Text>
         </View>
-        <View
+        {/* <View
           style={{
             width: vw / 1.09,
             borderBottomColor: '#E5E5E5',
@@ -271,7 +271,7 @@ function DoctorListingDetailsScreen({navigation, route}) {
           <Text style={{color: '#FFF', fontSize: 16, marginLeft: 10}}>
             Book Video Consultation
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
     </SafeAreaView>
   );

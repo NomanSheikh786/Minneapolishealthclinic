@@ -10,12 +10,10 @@ import {
 import checkCircle from '../../../assets/checkCircle.png';
 import {vh, vw} from '../../../constaint';
 
-
-
 function CheckEmailScreen({navigation}) {
   setTimeout(() => {
-    navigation.navigate('CreatePasswrod');
-  }, 2000);
+    navigation.navigate('ResetPassword');
+  }, 10000);
   return (
     <SafeAreaView style={styles.container}>
       <View

@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {
   CheckIcon,
@@ -35,14 +36,73 @@ import {
 import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
+import {SubmitData} from '../../configue/FirebaseSubmitForm';
 
-function Form3({navigation}) {
+function Form3({navigation, route}) {
+  const {form1, form2, formName} = route.params;
+
+  const [state, setState] = useState({
+    exercise: '',
+    diet: '',
+    alcohol: '',
+    smoke: '',
+    caffeine: '',
+    signText: '',
+    insurance: '',
+    idNumber: '',
+    groupNumber: '',
+    day: '',
+    month: '',
+    year: '',
+    relationship: '',
+  });
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [load, setLoad] = useState(false);
 
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const form3 = {...state};
+  const finalForm = {...form1, ...form2, ...form3};
+
+  const handleSubmit = () => {
+    const {
+      exercise,
+      diet,
+      alcohol,
+      smoke,
+      caffeine,
+      signText,
+      insurance,
+      idNumber,
+      groupNumber,
+      day,
+      month,
+      year,
+      relationship,
+    } = state;
+
+    // if (
+    // !exercise||
+    // !diet||
+    // !alcohol||
+    // !smoke||
+    // ! caffeine||
+    // !medicalHistory
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    SubmitData(finalForm, setLoad, navigation, formName);
+    // }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -54,36 +114,36 @@ function Form3({navigation}) {
           </Text>
         </View>
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.exercise}
+          setState={text => handleChange('exercise', text)}
           data={exerciseDays}
           label="Exercise"
           placeholder="Select Your Exercise"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.alcohol}
+          setState={text => handleChange('alcohol', text)}
           data={alcoholCheck}
           label="Alcohol Consumption"
           placeholder="Select Your Alcohol Consumption"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.diet}
+          setState={text => handleChange('diet', text)}
           data={dietFollow}
           label="Diet"
           placeholder="Select Your particular diet you follow"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.caffeine}
+          setState={text => handleChange('caffeine', text)}
           data={caffeineCheck}
           label="Caffeine Consumption"
           placeholder="Select Your Caffeine Consumption"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.smoke}
+          setState={text => handleChange('smoke', text)}
           data={smokeCheck}
           label="Tobacco Use"
           placeholder="Select Tobacco Use"
@@ -110,6 +170,8 @@ function Form3({navigation}) {
           </Text>
         </View>
         <FormInput
+          state={state.signText}
+          setState={text => handleChange('signText', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -119,14 +181,23 @@ function Form3({navigation}) {
         />
 
         <FormInput
+          state={state.insurance}
+          setState={text => handleChange('insurance', text)}
           placeholder="Type Insurance Company Name"
           label="Insurance Company Name"
         />
         <FormInput
+          state={state.idNumber}
+          setState={text => handleChange('idNumber', text)}
           placeholder="Type Insurance ID Number"
           label="Insurance ID Number"
         />
-        <FormInput placeholder="Type Group Number" label="Group Number" />
+        <FormInput
+          state={state.groupNumber}
+          setState={text => handleChange('groupNumber', text)}
+          placeholder="Type Group Number"
+          label="Group Number"
+        />
         <View style={{marginVertical: 5}}>
           <Text
             style={{color: 'black', fontSize: 14, fontWeight: 'bold'}}
@@ -252,22 +323,22 @@ function Form3({navigation}) {
               justifyContent: 'space-between',
             }}>
             <DropDown
-              state={months}
-              setState={setMonths}
+              state={state.day}
+              setState={text => handleChange('day', text)}
               placeholder="Month"
               data={month}
               direction={true}
             />
             <DropDown
-              state={days}
-              setState={setDays}
+              state={state.month}
+              setState={text => handleChange('month', text)}
               placeholder="Day"
               data={day}
               direction={true}
             />
             <DropDown
-              state={years}
-              setState={setYears}
+              state={state.year}
+              setState={text => handleChange('year', text)}
               placeholder="Year"
               data={year}
               direction={true}
@@ -275,6 +346,8 @@ function Form3({navigation}) {
           </View>
         </View>
         <FormInput
+          state={state.relationship}
+          setState={text => handleChange('relationship', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -284,12 +357,11 @@ function Form3({navigation}) {
           the relationship, your age and reason for representation"
         />
         <View style={{marginVertical: 20}}>
-          <RedLongButton
-            onPress={() => {
-              console.log('Covid Treat Submit');
-            }}
-            buttonText="Submit"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton onPress={handleSubmit} buttonText="Submit" />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
