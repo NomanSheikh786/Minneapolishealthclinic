@@ -47,7 +47,7 @@ function AppointmentScreen({navigation}) {
         setLoad(true);
         firebase
           .database()
-          .ref(`users/${id}/${appointmentData}/${selectDate}`)
+          .ref(`users/${id}/forms/${appointmentData}/${selectDate}`)
           .on('value', snapshot => {
             if (snapshot.val() == null) {
               setLoad(false);

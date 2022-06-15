@@ -11,51 +11,58 @@ import React, {useState, useEffect} from 'react';
 import InputType from '../../component/InputType';
 import {vh, vw} from '../../constaint/index';
 import RedLongButton from '../../component/RedLongButton';
-import { Checkbox,  Stack, Alert, IconButton, HStack, VStack, CloseIcon,  Center, NativeBaseProvider} from 'native-base';
+import {
+  Checkbox,
+  Stack,
+  Alert,
+  IconButton,
+  HStack,
+  VStack,
+  CloseIcon,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
 import firebase from '../../configue/index';
-
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [Loading, setLoading] = useState(false);
 
-  const [check,setCheck] =useState(false)
+  const [check, setCheck] = useState(false);
 
-
-  const statusArray = [{
-    status: "success",
-    title: "Selection successfully moved!"
-  }];
+  const statusArray = [
+    {
+      status: 'success',
+      title: 'Selection successfully moved!',
+    },
+  ];
 
   const loginUser = () => {
     if (email == '' || password == '') {
       alert('Must Required fill this blank');
-      
- 
-  
-
     } else {
       setLoading(true);
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(res => {
-          let id = firebase.auth().currentUser.uid;
-          firebase
-            .database()
-            .ref(`users/${id}`)
-            .update({isLogin: true})
-            .then(respo => {
-              setEmail('');
-              setPassword('');
-              setLoading(false);
-            
-              alert('Sign in Success');
-            })
-            .catch(errr => {
-              alert(errr.message);
-            });
+          alert('Sign in Success');
+
+          // let id = firebase.auth().currentUser.uid;
+          // firebase
+          //   .database()
+          //   .ref(`users/${id}`)
+          //   // .update({isLogin: true})
+          //   .then(respo => {
+          //     setEmail('');
+          //     setPassword('');
+          //     setLoading(false);
+
+          //   })
+          //   .catch(errr => {
+          //     alert(errr.message);
+          //   });
         })
         .catch(err => {
           setLoading(false);
@@ -66,10 +73,6 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
-
-
-
-
       <ScrollView>
         <Text
           style={{
