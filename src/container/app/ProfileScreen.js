@@ -36,10 +36,10 @@ function ProfileScreen(props) {
     setLoad(true);
     firebase
       .database()
-      .ref(`users/${id}`)
+      .ref(`users/${id}/userDetails`)
       .on('value', firebaseData => {
         let data = firebaseData.val();
-        setName(data?.name);
+        setName(data?.fname ? data?.fname : 'Unkown');
         setLoad(false);
       });
   }, []);
@@ -53,6 +53,7 @@ function ProfileScreen(props) {
 
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
       <Modaal
+        userName={name}
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={handleLogout}

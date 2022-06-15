@@ -12,7 +12,7 @@ const SubmitData = (finalForm, setLoad, navigation, formName) => {
   setLoad(true);
   firebase
     .database()
-    .ref(`users/${id}/${formName}/${today}`)
+    .ref(`users/${id}/forms/${formName}/${today}`)
     .push({
       finalForm,
       formStatus: false,

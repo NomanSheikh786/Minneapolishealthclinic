@@ -38,21 +38,34 @@ function EditProfileScreen({navigation}) {
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
-  const [load, setLoad] = useState(true);
-  const [userData, setUserData] = useState({});
+  const [load, setLoad] = useState(false);
+  const [updateLoader, setUpdateLoader] = useState(false);
 
   let id = firebase.auth().currentUser.uid;
   useEffect(() => {
+    setLoad(true);
     firebase
       .database()
-      .ref(`users/${id}`)
+      .ref(`users/${id}/userDetails`)
       .on('value', firebaseData => {
         let data = firebaseData.val();
-        setUserData(data);
         setLoad(false);
+
+        setState({
+          ...state,
+          ['email']: data?.email ? data.email : '',
+          ['fname']: data?.fname ? data.fname : '',
+          ['lname']: data?.lname ? data.lname : '',
+          ['gender']: data?.gender ? data.gender : '',
+          ['month']: data?.dataOfBirth ? data?.dataOfBirth?.month : '',
+          ['day']: data?.dataOfBirth ? data?.dataOfBirth?.day : '',
+          ['year']: data?.dataOfBirth ? data?.dataOfBirth?.year : '',
+          ['country']: data?.country ? data.country : '',
+          ['phone']: data?.phone ? data.phone : '',
+          ['address']: data?.address ? data.address : '',
+        });
       });
   }, []);
-
   const [state, setState] = useState({
     fname: '',
     lname: '',
@@ -71,17 +84,39 @@ function EditProfileScreen({navigation}) {
       [name]: value,
     });
   };
-  // const updatedData = () => {
-  //   if (userData) {
-  //     handleChange('email', userData?.email);
-  //   }
-  //   if (userData) {
-  //     handleChange('fname', userData?.email);
-  //   }
-  // };
-  // useEffect(() => {
-  //   updatedData();
-  // }, [userData]);
+
+  const userDetails = {
+    fname: state.fname,
+    lname: state.lname,
+    phone: state.phone,
+    email: state.email,
+    gender: state.gender,
+    dataOfBirth: {
+      month: state.month,
+      day: state.day,
+      year: state.year,
+    },
+    country: state.country,
+    address: state.address,
+  };
+
+  const updateProfile = () => {
+    setUpdateLoader(true);
+    firebase
+      .database()
+      .ref(`users/${id}`)
+      .set({
+        userDetails,
+      })
+      .then(res => {
+        setUpdateLoader(false);
+        alert('Update profile successfully');
+      })
+      .catch(err => {
+        setUpdateLoader(false);
+        alert('something went wrong');
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -199,12 +234,14 @@ function EditProfileScreen({navigation}) {
             />
 
             <View style={{marginVertical: 20}}>
-              <RedLongButton
-                onPress={() => {
-                  //   navigation.navigate('MedicalForm2');
-                }}
-                buttonText="Update Profile"
-              />
+              {updateLoader ? (
+                <ActivityIndicator color={'#FA284D'} size={'large'} />
+              ) : (
+                <RedLongButton
+                  onPress={updateProfile}
+                  buttonText="Update Profile"
+                />
+              )}
             </View>
           </>
         )}

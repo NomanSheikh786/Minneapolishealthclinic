@@ -34,7 +34,19 @@ const SignUp = ({navigation}) => {
   const [Loading, setLoading] = useState(false);
   const [checkbox, setCheckbox] = useState(true);
 
-  console.log(checkbox);
+  // console.log(checkbox);
+
+  const userDetails = {
+    fname: name,
+    lname: '',
+    phone: '',
+    email: email,
+    gender: '',
+    dataOfBirth: {month: '', day: '', year: ''},
+    country: '',
+    address: '',
+  };
+
   const signUpUser = () => {
     if (
       name == '' ||
@@ -61,11 +73,7 @@ const SignUp = ({navigation}) => {
             .database()
             .ref(`users/${id}`)
             .set({
-              name,
-              email,
-              password,
-              // confirmpassword,
-              isLogin: false,
+              userDetails,
             })
             .then(res => {
               setLoading(false);

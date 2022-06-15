@@ -13,7 +13,9 @@ const month = [
   'Dec',
 ];
 
-const day = Array.from(Array(32).keys()).slice(1);
+// const day = Array.from(Array(32).keys()).slice(1);
+// var day = Array.apply(null, {length: 30}).map(Number.call, Number);
+var day = Array.from(new Array(32), (val, index) => 'Day ' + index).slice(1);
 const year = Array.from(Array(new Date().getFullYear() - 1949), (_, i) =>
   (i + 1950).toString(),
 );
