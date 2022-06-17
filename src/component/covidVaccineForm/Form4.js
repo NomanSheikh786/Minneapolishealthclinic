@@ -35,6 +35,7 @@ import {
 import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function Form4({navigation, route}) {
   const {form1, form2, form3, formName} = route.params;
@@ -44,6 +45,8 @@ function Form4({navigation, route}) {
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [image, setImage] = useState('');
+
   // const [state, setState] = useState({
   //   fname: '',
   //   lname: '',
@@ -57,6 +60,19 @@ function Form4({navigation, route}) {
   };
 
   // const form4 = {...state};
+
+  const handleImage = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      // includeBase64: true,
+    });
+
+    if (result.assets) {
+      setImage(result.assets[0].uri);
+    } else {
+      console.log('No Image');
+    }
+  };
   const handleContinue = () => {
     // const {fname, lname} = state;
 
@@ -76,6 +92,10 @@ function Form4({navigation, route}) {
       form3: form3,
       // form4: form4,
       formName: formName,
+      setImage: setImage,
+      insuranceCard: 'insurance-card-image',
+      checkImage: true,
+      image: image,
     });
     // }
   };
@@ -98,33 +118,53 @@ function Form4({navigation, route}) {
             my={2}>
             Please upload a photo of your Insurance Card here
           </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: '#B2BAC6',
-              borderRadius: 8,
-              height: 150,
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              paddingVertical: 5,
-            }}>
-            <Image source={file} resizeMode="contain" />
-            <Text style={{fontWeight: '500'}}>
-              Drag your documents and photos
-            </Text>
-            <Text style={{color: '#5E6F88', fontSize: 12}}>
-              Support PDF, JPEG, PNG
-            </Text>
-            <TouchableOpacity
+
+          {image == '' ? (
+            <View
               style={{
-                backgroundColor: '#28B1FE',
+                borderWidth: 1,
+                borderColor: '#B2BAC6',
                 borderRadius: 8,
+                height: 150,
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
                 paddingVertical: 5,
-                paddingHorizontal: 15,
               }}>
-              <Text style={{color: '#FFF', fontSize: 12}}>Browse File</Text>
+              <Image source={file} resizeMode="contain" />
+              <Text style={{fontWeight: '500'}}>
+                Drag your documents and photos
+              </Text>
+              <Text style={{color: '#5E6F88', fontSize: 12}}>
+                Support PDF, JPEG, PNG
+              </Text>
+              <TouchableOpacity
+                onPress={handleImage}
+                style={{
+                  backgroundColor: '#28B1FE',
+                  borderRadius: 8,
+                  paddingVertical: 5,
+                  paddingHorizontal: 15,
+                }}>
+                <Text style={{color: '#FFF', fontSize: 12}}>Browse File</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={handleImage}
+              style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Image
+                source={{uri: image}}
+                resizeMode="contain"
+                style={{
+                  width: vw / 1.3,
+
+                  borderRadius: 8,
+                  height: vh / 4.5,
+                }}
+              />
             </TouchableOpacity>
-          </View>
+          )}
         </View>
 
         <View>

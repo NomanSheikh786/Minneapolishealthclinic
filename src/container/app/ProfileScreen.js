@@ -15,11 +15,15 @@ import {vh, vw} from '../../constaint/index';
 import {Switch, HStack, Center, NativeBaseProvider} from 'native-base';
 import SpaceGrayButton from '../../component/SpaceGrayButton';
 import Modaal from '../../component/Modaal';
-
+import {launchImageLibrary} from 'react-native-image-picker';
+import {addImage, getImage} from '../../configue/FirebaseImages';
 function ProfileScreen(props) {
   const [name, setName] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [load, setLoad] = useState(false);
+
+  const [image, setImage] = useState('');
+  const [imgLoad, setImgLoad] = useState(false);
 
   const handleLogout = () => {
     firebase
@@ -44,6 +48,54 @@ function ProfileScreen(props) {
       });
   }, []);
 
+  // const addImage = async () => {
+  //   const result = await launchImageLibrary({
+  //     mediaType: 'photo',
+  //     // includeBase64: true,
+  //   });
+
+  //   if (result.assets) {
+  //     const response = await fetch(result.assets[0].uri);
+  //     const blob = await response.blob();
+  //     console.log('poks');
+  //     firebase
+  //       .storage()
+  //       .ref(`users/Profile-Images/${id}`)
+  //       .child('profileImage')
+  //       .put(blob)
+  //       .then(
+  //         snapshot => console.log('image has been successfully added'),
+
+  //         // setTimeout(() => {
+
+  //         //   setImgLoad(true)
+  //         // }, 3000),
+  //       )
+  //       .then(() => {
+  //         getImage();
+  //         alert('user profile successfully added');
+  //       })
+  //       .catch(e => console.log(e));
+  //   } else {
+  //     console.log('No match');
+  //   }
+  // };
+  // const getImage = () => {
+  //   firebase
+  //     .storage()
+  //     .ref(`users/Profile-Images/${id}`)
+  //     .child('profileImage')
+  //     .getDownloadURL()
+  //     .then(url => {
+  //       setImage(url);
+
+  //       console.log('successfully get user profile');
+  //     })
+  //     .catch(e => console.log(e, 'error'));
+  // };
+  useEffect(() => {
+    getImage(setImage, 'Profile-Images', 'profileImage');
+  }, []);
   return (
     // <View style={styles.container}>
     //     <View style={{width: '90%'}}>
@@ -79,11 +131,45 @@ function ProfileScreen(props) {
               bottom: -50,
             }}>
             <View style={{position: 'relative'}}>
-              <Image source={require('../../assets/docpro.png')} />
-              <Image
-                style={{position: 'absolute', bottom: -15, right: -23}}
-                source={require('../../assets/cam.png')}
-              />
+              {image == '' ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    addImage(setImage, 'Profile-Images', 'profileImage')
+                  }>
+                  <Image
+                    style={{width: 100, height: 100, borderRadius: 100}}
+                    source={require('../../assets/unknown.jpg')}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    addImage(setImage, 'Profile-Images', 'profileImage')
+                  }>
+                  <Image
+                    resizeMode="contain"
+                    style={{width: 100, height: 100, borderRadius: 100}}
+                    source={{uri: image}}
+                  />
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity
+                onPress={() =>
+                  addImage(setImage, 'Profile-Images', 'profileImage')
+                }>
+                <Image
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderRadius: 100,
+                    position: 'absolute',
+                    bottom: -15,
+                    right: -23,
+                  }}
+                  source={require('../../assets/cam.png')}
+                />
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </View>

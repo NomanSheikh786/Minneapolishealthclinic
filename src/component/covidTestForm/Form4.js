@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {
   CheckIcon,
@@ -34,13 +35,88 @@ import {
 import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
+import {SubmitData} from '../../configue/FirebaseSubmitForm';
+import {addImage} from '../../configue/FirebaseImages';
 
-function Form4({navigation}) {
+function Form4({navigation, route}) {
+  const {
+    form1,
+    form2,
+    form3,
+    formName,
+
+    setImage,
+    insuranceCard,
+    checkImage,
+    image,
+  } = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [load, setLoad] = useState(false);
+
+  const [state, setState] = useState({
+    haveYouVaccinated: '',
+    positivePCR: '',
+    last14DayTravel: '',
+    countryName: '',
+    healthcareWorker: '',
+    fname: '',
+    lname: '',
+  });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const form4 = {...state};
+  const finalForm = {...form1, ...form2, ...form3, ...form4};
+
+  // const handleSubmit = () => {
+  // SubmitData(finalForm, setLoad, navigation, formName);
+  const handleSubmit = () => {
+    console.log(state);
+    const {
+      haveYouVaccinated,
+      positivePCR,
+      last14DayTravel,
+      countryName,
+      healthcareWorker,
+      fname,
+      lname,
+    } = state;
+
+    // if (
+    //   !gender ||
+    //   !fname ||
+    //   !lname ||
+    //   !day ||
+    //   !month ||
+    //   !year ||
+    //   !height ||
+    //   !email ||
+    //   !phone ||
+    //   !streetAddress1 ||
+    //   !streetAddress2 ||
+    //   !city ||
+    //   !province ||
+    //   !postal ||
+    //   !ques ||
+    //   !weight ||
+    //   !visit ||
+    //   !other
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    SubmitData(finalForm, setLoad, navigation, formName);
+    addImage(setImage, formName, insuranceCard, checkImage, image);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,31 +124,36 @@ function Form4({navigation}) {
         showsVerticalScrollIndicator={false}
         style={{width: vw - 40, alignSelf: 'center'}}>
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.haveYouVaccinated}
+          setState={text => handleChange('haveYouVaccinated', text)}
           data={yn}
           label="Have you been vaccinated for COVID-19?"
           placeholder="Select you been vaccinated for COVID-19?"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.positivePCR}
+          setState={text => handleChange('positivePCR', text)}
           data={pcrCheck}
           label="Have you had a POSITIVE COVID PCR or Molecular Test (NOT Antigen) within the past 10 days? "
           placeholder="Select you had a POSITIVE COVID PCR"
         />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.last14DayTravel}
+          setState={text => handleChange('last14DayTravel', text)}
           data={yn}
           label="Within the last 14 days, Have you traveled Internationally?"
           placeholder="Select last 14 days, Have you traveled Internationally?"
         />
-        <FormInput placeholder="Enter country name" label="If Yes, Where?" />
+        <FormInput
+          state={state.countryName}
+          setState={text => handleChange('countryName', text)}
+          placeholder="Enter country name"
+          label="If Yes, Where?"
+        />
 
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.healthcareWorker}
+          setState={text => handleChange('healthcareWorker', text)}
           data={yn}
           label="Are you a healthcare worker?"
           placeholder="Select you a healthcare worker?"
@@ -147,8 +228,18 @@ function Form4({navigation}) {
           </TouchableOpacity>
         </View>
         <View style={{marginTop: 10}}>
-          <FormInput placeholder="First Name" multiple={true} />
-          <FormInput placeholder="Last Name" multiple={true} />
+          <FormInput
+            state={state.fname}
+            setState={text => handleChange('fname', text)}
+            placeholder="First Name"
+            multiple={true}
+          />
+          <FormInput
+            state={state.lname}
+            setState={text => handleChange('lname', text)}
+            placeholder="Last Name"
+            multiple={true}
+          />
         </View>
         <View style={{marginTop: 5}}>
           <Text
@@ -198,12 +289,14 @@ function Form4({navigation}) {
         </View>
 
         <View style={{marginVertical: 20}}>
-          <RedLongButton
-            onPress={() => {
-              console.log('submit covid test');
-            }}
-            buttonText="Save and Continue"
-          />
+          {load ? (
+            <ActivityIndicator color={'#FA284D'} size={'large'} />
+          ) : (
+            <RedLongButton
+              onPress={handleSubmit}
+              buttonText="Book an Appointment"
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -32,8 +32,19 @@ import {
 import {FormInput} from '../FormInput';
 import {Calendar, CalendarProps} from 'react-native-calendars';
 import {SubmitData} from '../../configue/FirebaseSubmitForm';
+import {addImage} from '../../configue/FirebaseImages';
+
 function Form5({navigation, route}) {
-  const {form1, form2, form3, formName} = route.params;
+  const {
+    form1,
+    form2,
+    form3,
+    formName,
+    setImage,
+    insuranceCard,
+    checkImage,
+    image,
+  } = route.params;
 
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
@@ -73,6 +84,8 @@ function Form5({navigation, route}) {
     //   alert('complete all fields');
     // } else {
     SubmitData(finalForm, setLoad, navigation, formName);
+    addImage(setImage, formName, insuranceCard, checkImage, image);
+
     // }
   };
   return (

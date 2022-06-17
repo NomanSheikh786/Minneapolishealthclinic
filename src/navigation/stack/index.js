@@ -6,10 +6,11 @@ import {HomeStack} from '../stack/Appstack';
 import 'react-native-gesture-handler';
 import firebase from 'firebase';
 import BottomNavigation from '../bottom/BottonTab';
+import DoctorHomeScreen from '../../container/Doctor/DoctorHomeScreen';
 
 const Navigation = () => {
   const [mystack, setMyStack] = useState(<Text></Text>);
-
+  const [doctor, setDoctor] = useState(false);
   const checkAuth = () => {
     firebase.auth().onAuthStateChanged(user => {
       setMyStack(user);
@@ -20,20 +21,14 @@ const Navigation = () => {
       // }
 
       // if (user) {
-      //   let id = firebase.auth().currentUser.uid;
-      //   firebase
-      //     .database()
-      //     .ref(`users/${id}`)
-      //     .on('value', firebaseData => {
-      //       let data = firebaseData.val();
-      //       if (data.isLogin) {
-      //         setMyStack(<BottomNavigation />);
-      //       } else {
-      //         setMyStack(<AuthStack />);
-      //       }
-      //     });
-      // } else {
-      //   setMyStack(<AuthStack />);
+      let id = firebase.auth().currentUser.uid;
+      firebase
+        .database()
+        .ref(`users/${id}/userDetails`)
+        .on('value', firebaseData => {
+          let data = firebaseData.val();
+          setDoctor(data?.isDoctor);
+        });
       // }
     });
   };
@@ -43,7 +38,13 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      {mystack ? <BottomNavigation /> : <AuthStack />}
+      {mystack && !doctor ? (
+        <BottomNavigation />
+      ) : mystack && doctor ? (
+        <DoctorHomeScreen />
+      ) : (
+        <AuthStack />
+      )}
 
       {/* <HomeStack/> */}
     </NavigationContainer>

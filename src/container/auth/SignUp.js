@@ -45,6 +45,7 @@ const SignUp = ({navigation}) => {
     dataOfBirth: {month: '', day: '', year: ''},
     country: '',
     address: '',
+    isDoctor: true,
   };
 
   const signUpUser = () => {

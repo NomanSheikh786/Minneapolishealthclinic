@@ -27,6 +27,13 @@ function AppointmentHistory({data, navigation}) {
         contentContainerStyle={{paddingBottom: 70}}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, ind) => ind.toString()}
+        ListEmptyComponent={
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 22, marginTop: vh / 3}}>
+              No Data Found !
+            </Text>
+          </View>
+        }
         renderItem={({item}) => {
           return (
             <>

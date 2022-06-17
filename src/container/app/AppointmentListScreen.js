@@ -14,11 +14,16 @@ import AppointmentTabs from './AppointemenList';
 
 function AppointmentListScreen({route, navigation}) {
   const {data} = route.params;
-
+  // const [searchAppointment,setSearchAppointment] = useState("")
+  //   console.log('ddataa', data.filter((item) => {
+  //     if(searchAppointment == "") {
+  //       return item
+  //     }
+  //   }));
   return (
     <SafeAreaView style={styles.container}>
       <View style={{width: vw - 40, alignSelf: 'center'}}>
-        <View
+        {/* <View
           style={{
             borderWidth: 1,
             borderColor: '#B2BAC6',
@@ -60,7 +65,7 @@ function AppointmentListScreen({route, navigation}) {
               source={require('../../assets/filter.png')}
             />
           </View>
-        </View>
+        </View> */}
       </View>
 
       <AppointmentTabs data={data} navigation={navigation} />

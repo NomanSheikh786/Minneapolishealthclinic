@@ -33,12 +33,62 @@ import {FormInput, CheckBox} from '../FormInput';
 import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
 
-function Form2({navigation}) {
+function Form2({navigation, route}) {
+  const {form1, formName} = route.params;
+
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [state, setState] = useState({
+    healthcareQualification: '',
+    currentMedication: '',
+    pastSurgeries: '',
+  });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+  const form2 = {...state};
+
+  const handleContinue = () => {
+    console.log(state);
+    const {healthcareQualification, currentMedication, pastSurgeries} = state;
+
+    // if (
+    //   !gender ||
+    //   !fname ||
+    //   !lname ||
+    //   !day ||
+    //   !month ||
+    //   !year ||
+    //   !height ||
+    //   !email ||
+    //   !phone ||
+    //   !streetAddress1 ||
+    //   !streetAddress2 ||
+    //   !city ||
+    //   !province ||
+    //   !postal ||
+    //   !ques ||
+    //   !weight ||
+    //   !visit ||
+    //   !other
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('MedicalForm3', {
+      form1: form1,
+      form2: form2,
+
+      formName: formName,
+    });
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,6 +102,8 @@ function Form2({navigation}) {
         </View>
 
         <FormInput
+          state={state.healthcareQualification}
+          setState={text => handleChange('healthcareQualification', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -73,6 +125,8 @@ function Form2({navigation}) {
         <CheckBox text="I acknowledge" checkboxValue={'acknowledge'} />
 
         <FormInput
+          state={state.currentMedication}
+          setState={text => handleChange('currentMedication', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -83,6 +137,8 @@ function Form2({navigation}) {
           are currently prescribed:"
         />
         <FormInput
+          state={state.pastSurgeries}
+          setState={text => handleChange('pastSurgeries', text)}
           multiline={true}
           height={150}
           numberOfLines={10}
@@ -93,9 +149,7 @@ function Form2({navigation}) {
 
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('MedicalForm3');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

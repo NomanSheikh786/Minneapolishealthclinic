@@ -22,6 +22,9 @@ import {
 import {vh, vw} from '../../constaint';
 import RedLongButton from '../RedLongButton';
 import DropDown from '../DropDown';
+
+import {launchImageLibrary} from 'react-native-image-picker';
+
 import {
   internalMedicane,
   exerciseDays,
@@ -35,6 +38,7 @@ import file from '../../assets/selectFile.png';
 import sign from '../../assets/sign.png';
 import firebase from '../../configue/index';
 import {SubmitData} from '../../configue/FirebaseSubmitForm';
+import {addImage} from '../../configue/FirebaseImages';
 function Form3({navigation, route}) {
   const {form1, form2, formName} = route.params;
   const [state, setState] = useState({
@@ -48,7 +52,7 @@ function Form3({navigation, route}) {
 
   const [check, setCheck] = useState(false);
   const [load, setLoad] = useState(false);
-
+  const [image, setImage] = useState('');
   const handleChange = (name, value) => {
     setState({
       ...state,
@@ -58,6 +62,19 @@ function Form3({navigation, route}) {
   const form3 = {...state, check};
 
   const finalForm = {...form1, ...form2, ...form3};
+
+  const handleImage = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      // includeBase64: true,
+    });
+
+    if (result.assets) {
+      setImage(result.assets[0].uri);
+    } else {
+      console.log('No Image');
+    }
+  };
   const handleSubmit = () => {
     const {exercise, diet, alcohol, smoke, caffeine, medicalHistory} = state;
 
@@ -72,6 +89,7 @@ function Form3({navigation, route}) {
     //   alert('complete all fields');
     // } else {
     SubmitData(finalForm, setLoad, navigation, formName);
+    addImage(setImage, formName, 'insurance-card-image', true, image);
     // }
   };
 
@@ -127,33 +145,53 @@ function Form3({navigation, route}) {
             my={2}>
             Please upload a photo of your insurance card here:
           </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: '#B2BAC6',
-              borderRadius: 8,
-              height: 150,
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              paddingVertical: 5,
-            }}>
-            <Image source={file} resizeMode="contain" />
-            <Text style={{fontWeight: '500'}}>
-              Drag your documents and photos
-            </Text>
-            <Text style={{color: '#5E6F88', fontSize: 12}}>
-              Support PDF, JPEG, PNG
-            </Text>
-            <TouchableOpacity
+
+          {image == '' ? (
+            <View
               style={{
-                backgroundColor: '#28B1FE',
+                borderWidth: 1,
+                borderColor: '#B2BAC6',
                 borderRadius: 8,
+                height: 150,
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
                 paddingVertical: 5,
-                paddingHorizontal: 15,
               }}>
-              <Text style={{color: '#FFF', fontSize: 12}}>Browse File</Text>
+              <Image source={file} resizeMode="contain" />
+              <Text style={{fontWeight: '500'}}>
+                Drag your documents and photos
+              </Text>
+              <Text style={{color: '#5E6F88', fontSize: 12}}>
+                Support PDF, JPEG, PNG
+              </Text>
+              <TouchableOpacity
+                onPress={handleImage}
+                style={{
+                  backgroundColor: '#28B1FE',
+                  borderRadius: 8,
+                  paddingVertical: 5,
+                  paddingHorizontal: 15,
+                }}>
+                <Text style={{color: '#FFF', fontSize: 12}}>Browse File</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={handleImage}
+              style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Image
+                source={{uri: image}}
+                resizeMode="contain"
+                style={{
+                  width: vw / 1.3,
+
+                  borderRadius: 8,
+                  height: vh / 4.5,
+                }}
+              />
             </TouchableOpacity>
-          </View>
+          )}
         </View>
 
         <FormInput

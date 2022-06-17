@@ -30,12 +30,83 @@ import {
 } from '../FormData';
 import {FormInput} from '../FormInput';
 
-function Form1({navigation}) {
+function Form1({navigation, formName}) {
   const [genders, setGenders] = useState('');
   const [days, setDays] = useState('');
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
   const [ques, setQues] = useState('');
+  const [state, setState] = useState({
+    fname: '',
+    lname: '',
+    day: '',
+    month: '',
+    year: '',
+    email: '',
+    phone: '',
+    gender: '',
+
+    streetAddress1: '',
+    streetAddress2: '',
+    city: '',
+    province: '',
+    postal: '',
+    country: '',
+    willYouChecking: '',
+    hearThisProgram: '',
+  });
+
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleContinue = () => {
+    console.log(state);
+    const {
+      fname,
+      lname,
+      day,
+      month,
+      year,
+      email,
+      phone,
+      gender,
+      streetAddress1,
+      city,
+      province,
+      postal,
+      country,
+      willYouChecking,
+      hearThisProgram,
+    } = state;
+    // if (
+    //   !gender ||
+    //   !fname ||
+    //   !lname ||
+    //   !day ||
+    //   !month ||
+    //   !year ||
+    //   !height ||
+    //   !email ||
+    //   !phone ||
+    //   !streetAddress1 ||
+    //   !streetAddress2 ||
+    //   !city ||
+    //   !province ||
+    //   !postal ||
+    //   !ques ||
+    //   !weight ||
+    //   !visit ||
+    //   !other
+    // ) {
+    //   alert('complete all fields');
+    // } else {
+    navigation.navigate('MedicalForm2', {form1: state, formName: formName});
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,8 +132,18 @@ function Form1({navigation}) {
             Name
           </Text>
 
-          <FormInput placeholder="First Name" multiple={true} />
-          <FormInput placeholder="Last Name" multiple={true} />
+          <FormInput
+            state={state.fname}
+            setState={text => handleChange('fname', text)}
+            placeholder="First Name"
+            multiple={true}
+          />
+          <FormInput
+            state={state.lname}
+            setState={text => handleChange('lname', text)}
+            placeholder="Last Name"
+            multiple={true}
+          />
         </View>
         <View style={{marginVertical: 5}}>
           <Text
@@ -78,22 +159,22 @@ function Form1({navigation}) {
               justifyContent: 'space-between',
             }}>
             <DropDown
-              state={months}
-              setState={setMonths}
+              state={state.month}
+              setState={text => handleChange('month', text)}
               placeholder="Month"
               data={month}
               direction={true}
             />
             <DropDown
-              state={days}
-              setState={setDays}
+              state={state.day}
+              setState={text => handleChange('day', text)}
               placeholder="Day"
               data={day}
               direction={true}
             />
             <DropDown
-              state={years}
-              setState={setYears}
+              state={state.year}
+              setState={text => handleChange('year', text)}
               placeholder="Year"
               data={year}
               direction={true}
@@ -101,11 +182,21 @@ function Form1({navigation}) {
           </View>
         </View>
 
-        <FormInput placeholder="patient@example.com" label="E-mail Address" />
-        <FormInput placeholder="XXXX-XXXX-XXX" label="Phone Number" />
+        <FormInput
+          state={state.email}
+          setState={text => handleChange('email', text)}
+          placeholder="patient@example.com"
+          label="E-mail Address"
+        />
+        <FormInput
+          state={state.phone}
+          setState={text => handleChange('phone', text)}
+          placeholder="XXXX-XXXX-XXX"
+          label="Phone Number"
+        />
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.gender}
+          setState={text => handleChange('gender', text)}
           data={gender}
           label="Gender"
           placeholder="Select Your Gender"
@@ -119,14 +210,39 @@ function Form1({navigation}) {
             Address
           </Text>
 
-          <FormInput placeholder="Steet Address" multiple={true} />
-          <FormInput placeholder="Street Address Line 2" multiple={true} />
-          <FormInput placeholder="City" multiple={true} />
-          <FormInput placeholder="State / Province" multiple={true} />
-          <FormInput placeholder="Postal / Zip Code" multiple={true} />
+          <FormInput
+            state={state.streetAddress1}
+            setState={text => handleChange('streetAddress1', text)}
+            placeholder="Steet Address"
+            multiple={true}
+          />
+          <FormInput
+            state={state.streetAddress2}
+            setState={text => handleChange('streetAddress2', text)}
+            placeholder="Street Address Line 2"
+            multiple={true}
+          />
+          <FormInput
+            state={state.city}
+            setState={text => handleChange('city', text)}
+            placeholder="City"
+            multiple={true}
+          />
+          <FormInput
+            state={state.province}
+            setState={text => handleChange('province', text)}
+            placeholder="State / Province"
+            multiple={true}
+          />
+          <FormInput
+            state={state.postal}
+            setState={text => handleChange('postal', text)}
+            placeholder="Postal / Zip Code"
+            multiple={true}
+          />
           <DropDown
-            state={genders}
-            setState={setGenders}
+            state={state.country}
+            setState={text => handleChange('country', text)}
             data={country}
             placeholder="Select Country"
             noLabel={true}
@@ -134,22 +250,22 @@ function Form1({navigation}) {
         </View>
 
         <DropDown
-          state={genders}
-          setState={setGenders}
+          state={state.willYouChecking}
+          setState={text => handleChange('willYouChecking', text)}
           data={checking}
           label="How will you checking"
           placeholder="Select How will you checking"
         />
         <FormInput
+          state={state.hearThisProgram}
+          setState={text => handleChange('hearThisProgram', text)}
           placeholder="Type how did you hear about this program"
           label="How did you hear about this program?"
         />
 
         <View style={{marginVertical: 20}}>
           <RedLongButton
-            onPress={() => {
-              navigation.navigate('MedicalForm2');
-            }}
+            onPress={handleContinue}
             buttonText="Save and Continue"
           />
         </View>

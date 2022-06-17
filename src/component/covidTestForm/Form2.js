@@ -85,16 +85,24 @@ function Form2({navigation, route}) {
   //     }
   //   };
   // }, [selected]);
-  const finalForm = {...times, selectDate, ...form1};
-  // console.log('data', finalForm);
-  const handleSubmit = () => {
-    SubmitData(finalForm, setLoad, navigation, formName);
-    // navigation.navigate('FormSubmit', {
-    //   title: 'Appointment Confirmed',
-    //   text: 'You booked an appointment for Covid-19 Testing on Friday, 24 June at 09:15 AM',
-    //   // button: true,
-    // });
+  const form2 = {...times, selectDate};
+
+  const handleContinue = () => {
+    navigation.navigate('CovidTestForm3', {
+      form1: form1,
+      form2: form2,
+      formName: formName,
+    });
   };
+  // console.log('data', finalForm);
+  // const handleSubmit = () => {
+  // SubmitData(finalForm, setLoad, navigation, formName);
+  // navigation.navigate('FormSubmit', {
+  //   title: 'Appointment Confirmed',
+  //   text: 'You booked an appointment for Covid-19 Testing on Friday, 24 June at 09:15 AM',
+  //   // button: true,
+  // });
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -314,14 +322,10 @@ function Form2({navigation, route}) {
           </View>
         ) : null}
         <View style={{marginVertical: 30}}>
-          {load ? (
-            <ActivityIndicator color={'#FA284D'} size={'large'} />
-          ) : (
-            <RedLongButton
-              onPress={handleSubmit}
-              buttonText="Book an Appointment"
-            />
-          )}
+          <RedLongButton
+            onPress={handleContinue}
+            buttonText="Save and Continue"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

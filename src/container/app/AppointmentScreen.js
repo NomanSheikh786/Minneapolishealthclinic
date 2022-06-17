@@ -63,10 +63,11 @@ function AppointmentScreen({navigation}) {
                   formData.push(data);
                   // console.log('formData', formData);
 
-                  alert('successfully data found');
-                  navigation.navigate('AppointmentListScreen', {
+                  // alert('successfully data found');
+                  navigation.push('AppointmentListScreen', {
                     data: formData,
                   });
+                  setAppointmentData('');
                   // setLoad(false);
                 } else {
                   setLoad(false);
