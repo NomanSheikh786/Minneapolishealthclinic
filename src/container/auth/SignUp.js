@@ -23,6 +23,7 @@ import {
   Center,
   NativeBaseProvider,
 } from 'native-base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUp = ({navigation}) => {
   const [check, setCheck] = useState(false);
@@ -36,19 +37,23 @@ const SignUp = ({navigation}) => {
 
   // console.log(checkbox);
 
-  const userDetails = {
-    fname: name,
-    lname: '',
-    phone: '',
-    email: email,
-    gender: '',
-    dataOfBirth: {month: '', day: '', year: ''},
-    country: '',
-    address: '',
-    isDoctor: true,
-  };
+  const getToken = async () => {};
 
-  const signUpUser = () => {
+  const signUpUser = async () => {
+    const fcmToken = await AsyncStorage.getItem('fcmToken');
+
+    const userDetails = {
+      fname: name,
+      lname: '',
+      phone: '',
+      email: email,
+      gender: '',
+      dataOfBirth: {month: '', day: '', year: ''},
+      country: '',
+      address: '',
+      isDoctor: false,
+      fcmToken: fcmToken,
+    };
     if (
       name == '' ||
       email == '' ||

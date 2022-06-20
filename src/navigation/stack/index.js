@@ -7,7 +7,11 @@ import 'react-native-gesture-handler';
 import firebase from 'firebase';
 import BottomNavigation from '../bottom/BottonTab';
 import DoctorHomeScreen from '../../container/Doctor/DoctorHomeScreen';
-
+import DoctorUserFormScreen from '../../container/Doctor/DoctorUserFormScreen';
+import {createStackNavigator} from '@react-navigation/stack';
+import AppointmentScreen from '../../container/Doctor/AppointmentScreen';
+import AppointmentListScreen from '../../container/Doctor/AppointmentListScreen';
+import AppointmentHIstoryDetails from '../../container/Doctor/AppointemenList/AppointmentHIstoryDet';
 const Navigation = () => {
   const [mystack, setMyStack] = useState(<Text></Text>);
   const [doctor, setDoctor] = useState(false);
@@ -28,6 +32,7 @@ const Navigation = () => {
         .on('value', firebaseData => {
           let data = firebaseData.val();
           setDoctor(data?.isDoctor);
+          console.log(data?.isDoctor);
         });
       // }
     });
@@ -36,12 +41,48 @@ const Navigation = () => {
     checkAuth();
   }, []);
 
+  const DoctorStack = () => {
+    const Stack = createStackNavigator();
+
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="DoctorHomeScreen"
+          component={DoctorHomeScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DoctorUserFormScreen"
+          component={DoctorUserFormScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AppointmentScreen"
+          component={AppointmentScreen}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="AppointmentListScreen"
+          component={AppointmentListScreen}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="AppointmentHistoryDetails"
+          component={AppointmentHIstoryDetails}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <NavigationContainer>
       {mystack && !doctor ? (
         <BottomNavigation />
       ) : mystack && doctor ? (
-        <DoctorHomeScreen />
+        <DoctorStack />
       ) : (
         <AuthStack />
       )}

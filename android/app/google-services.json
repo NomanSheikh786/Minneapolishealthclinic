@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1027194873714",
+    "firebase_url": "https://clinicminneapolishealth-5e237-default-rtdb.firebaseio.com",
+    "project_id": "clinicminneapolishealth-5e237",
+    "storage_bucket": "clinicminneapolishealth-5e237.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027194873714:android:6375b18c9e622a20e61feb",
+        "android_client_info": {
+          "package_name": "com.minneapolishealthclinic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027194873714-5tu0t2m9eg640p26cpb0g65k1pm6pos9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtkw9uV6LKH5IYYcx6vnSVuzVtQxqof5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027194873714-5tu0t2m9eg640p26cpb0g65k1pm6pos9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

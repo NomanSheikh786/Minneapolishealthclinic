@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,11 +6,18 @@ import {
   StyleSheet,
   StatusBar,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Navigation from './src/navigation/stack/index';
 import {NativeBaseProvider} from 'native-base';
 import AgoraUIKit, {mode, role} from 'agora-rn-uikit';
 import {LogBox} from 'react-native';
+import PushNotification from 'react-native-push-notification';
+
+import {
+  requestUserPermission,
+  notificationListener,
+} from './src/configue/notificationService';
 const App = () => {
   // const [videoCall, setVideoCall] = useState(true);
   // const rtcProps = {
@@ -24,6 +31,45 @@ const App = () => {
     'Warning: Async Storage has been extracted from react-native core',
   ]);
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PushNotification.configure({
+        onRegister: function (token) {
+          console.log('TOKEN:', token);
+        },
+
+        onNotification: function (notification) {
+          console.log('NOTIFICATION:', notification);
+
+          // notification.finish(PushNotificationIOS.FetchResult.NoData);
+        },
+
+        onAction: function (notification) {
+          console.log('ACTION:', notification.action);
+          console.log('NOTIFICATION:', notification);
+        },
+
+        onRegistrationError: function (err) {
+          console.error(err.message, err);
+        },
+
+        permissions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+
+        popInitialNotification: true,
+        requestPermissions: true,
+      });
+    }
+
+    requestUserPermission();
+    notificationListener();
+
+    // requestUserPermission();
+    // notificationListener();
+  }, []);
   return (
     <NativeBaseProvider>
       <StatusBar backgroundColor={'#FFF'} barStyle="dark-content" />
