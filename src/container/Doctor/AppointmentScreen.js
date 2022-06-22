@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import DropDown from '../../component/DropDown';
 import {appointments} from '../../component/FormData';
@@ -19,12 +20,12 @@ import {vh, vw} from '../../constaint';
 import {Calendar, CalendarProps} from 'react-native-calendars';
 import calendar from '../../assets/calendar.png';
 function AppointmentScreen({navigation, route}) {
-  const {item} = route.params;
+  const {userData} = route.params;
   const [appointmentData, setAppointmentData] = useState('');
   const [picDate, setPicDate] = useState(false);
   const [load, setLoad] = useState(false);
-  console.log(item);
-  // const [formData, setFormData] = useState([]);
+  // console.log(item);
+  const [userForms, setUserForms] = useState([]);
 
   // const year = new Date().getFullYear().toLocaleString();
   // const month = new Date().getMonth() + 1;
@@ -40,147 +41,149 @@ function AppointmentScreen({navigation, route}) {
   const [selectDate, setSelectDate] = useState(today);
   let id = firebase.auth().currentUser.uid;
 
-  const formData = [];
+  // const formData = [];
 
-  const searchFormHandle = () => {
-    if (!selectDate || !appointmentData) {
-      alert('select all filters');
-    } else {
-      if (id) {
-        setLoad(true);
+  // const searchFormHandle = () => {
+  // if (!selectDate || !appointmentData) {
+  //   alert('select all filters');
+  // } else {
+  // if (id) {
+  //   setLoad(true);
 
-        //       firebase
-        // .database()
-        // .ref(`users/`)
-        // .on('value', function (snapshot) {
-        //   snapshot.forEach(function (data) {
-        //     const aa = data.child('forms/Covid-19 Testing/2022-06-17');
-        //     console.log(aa);
-        //   });
-        // });
-        firebase
-          .database()
-          .ref(`users/${item?.id}/forms/${appointmentData}/${selectDate}`)
-          .on('value', snapshot => {
-            if (snapshot.val() == null) {
-              setLoad(false);
-              alert('No data found');
-            } else {
-              snapshot.forEach(function (childSnapshot) {
-                // console.log(childSnapshot);
-                var data = childSnapshot.val();
-                if (data) {
-                  setLoad(false);
-                  // console.log('data', Object.keys(data).length);
-                  formData.push(data);
-                  // console.log('formData', formData);
-
-                  // alert('successfully data found');
-                  navigation.push('AppointmentListScreen', {
-                    data: formData,
-                    allData: item,
-                  });
-                  setAppointmentData('');
-                  // setLoad(false);
-                } else {
-                  setLoad(false);
-                  alert('No data found');
-                  console.log('no data');
-                }
-              });
-            }
+  //       firebase
+  // .database()
+  // .ref(`users/`)
+  // .on('value', function (snapshot) {
+  //   snapshot.forEach(function (data) {
+  //     const aa = data.child('forms/Covid-19 Testing/2022-06-17');
+  //     console.log(aa);
+  //   });
+  // });
+  useEffect(() => {
+    setLoad(true);
+    firebase
+      .database()
+      .ref(`users/${userData?.id}/forms`)
+      .once('value', snapshot => {
+        if (snapshot.val() == null) {
+          setLoad(false);
+          alert('No data found');
+        } else {
+          // console.log('snapp', snapshot.val());
+          let data = snapshot.val();
+          const arrayResult = Object.keys(data).map(formData => {
+            return {formName: formData, formDetails: data[formData]};
           });
-      } else {
-        setLoad(false);
-        console.log('No Any Form');
-        alert('No Any form');
-      }
-    }
-  };
-  console.log(formData);
+          setUserForms(arrayResult);
+          setLoad(false);
+        }
+      });
+  }, []);
+  // userForms.map(aa => console.log(aa.data));
   return (
+    // <SafeAreaView style={styles.container}>
+    //   <ScrollView
+    //     showsVerticalScrollIndicator={false}
+    //     contentContainerStyle={{paddingBottom: 70}}
+    //     style={{width: vw - 40, alignSelf: 'center'}}>
+    //     <View style={{marginTop: 20}}>
+    //       <Text style={{fontSize: 20, color: '#000', fontWeight: '500'}}>
+    //         User Forms
+    //       </Text>
+    //     </View>
+
+    // <TouchableOpacity>
+    //   <Text></Text>
+    // </TouchableOpacity>
+
+    //     {/* <View style={{marginVertical: 30}}>
+    //       {load ? (
+    //         <ActivityIndicator color={'#FA284D'} size={'large'} />
+    //       ) : (
+    //         <RedLongButton buttonText="Apply" />
+    //       )}
+    //     </View> */}
+    //   </ScrollView>
+    // </SafeAreaView>
+
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 70}}
-        style={{width: vw - 40, alignSelf: 'center'}}>
-        <View style={{marginTop: 20}}>
-          <Text style={{fontSize: 20, color: '#000', fontWeight: '500'}}>
-            Appointments
-          </Text>
+      {load ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size={'large'} color={'red'} />
         </View>
+      ) : (
+        <FlatList
+          ListHeaderComponent={
+            <View style={{marginLeft: 20, marginTop: 20}}>
+              <Text style={{fontSize: 22, fontWeight: 'bold', color: 'black'}}>
+                User Form List
+              </Text>
+            </View>
+          }
+          data={userForms}
+          keyExtractor={(item, ind) => ind.toString()}
+          ListEmptyComponent={
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 80,
+              }}>
+              <Text style={{color: 'black', fontSize: 18}}>
+                No User Form Found
+              </Text>
+            </View>
+          }
+          renderItem={({item}) => {
+            return (
+              // item?.id != id && (
+              <TouchableOpacity
+                // onPress={
+                //   () =>
+                //   // navigation.navigate('AppointmentScreen', {item: item})
+                //   {
+                //     // PushNotification.localNotification({
+                //     //   channelId: 'test-channel',
+                //     //   title: 'testing',
+                //     //   message: 'poka',
+                //     // });
+                //   }
+                // }
+                onPress={() =>
+                  navigation.navigate('FormDetails', {
+                    item: item,
+                    userData: userData,
+                  })
+                }
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'lightgrey',
+                  width: '90%',
+                  alignSelf: 'center',
+                  paddingVertical: 15,
+                  paddingHorizontal: 10,
+                  borderRadius: 7,
+                  margin: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{color: 'black', fontSize: 16}}>
+                  {item?.formName}
+                </Text>
 
-        <View style={{marginVertical: 20}}>
-          <Text
-            style={{color: 'black', fontSize: 14, fontWeight: 'bold'}}
-            mt={5}
-            my={2}>
-            Select Date
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => setPicDate(!picDate)}
-            activeOpacity={0.8}
-            style={{
-              fontSize: 14,
-              color: '#5E6F88',
-              borderWidth: 1,
-              borderColor: '#B2BAC6',
-              borderRadius: 8,
-              padding: 10,
-              height: 50,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 5,
-              flexDirection: 'row',
-              // textAlignVertical: props.textAlignVertical,
-            }}>
-            <Text>{selectDate}</Text>
-            <Image source={calendar} />
-          </TouchableOpacity>
-        </View>
-
-        {picDate ? (
-          <Calendar
-            style={{
-              backgroundColor: '#FFF',
-              // marginTop: 10,
-              // marginVertical: 30,
-              // borderWidth: 1,
-              borderColor: 'red',
-              borderRadius: 5,
-              padding: 5,
-              // width: vw / 1.5,
-              // alignSelf: 'center',
-              // height: vh / 2.2,
-            }}
-            onDayPress={e => setSelectDate(e.dateString)}
-            enableSwipeMonths={true}
-            // Collection of dates that have to be marked. Default = {}
-            markedDates={{
-              [selectDate]: {
-                selected: true,
-                selectedColor: '#FE284D',
-              },
-            }}
-          />
-        ) : null}
-        <DropDown
-          state={appointmentData}
-          setState={text => setAppointmentData(text)}
-          data={appointments}
-          label="Appointment For"
-          placeholder="Select Your Appointment"
+                <Image
+                  source={require('../../assets/nav.png')}
+                  resizeMode={'contain'}
+                  style={{height: 15, width: 15}}
+                />
+              </TouchableOpacity>
+              // )
+            );
+          }}
         />
-
-        <View style={{marginVertical: 30}}>
-          {load ? (
-            <ActivityIndicator color={'#FA284D'} size={'large'} />
-          ) : (
-            <RedLongButton onPress={searchFormHandle} buttonText="Apply" />
-          )}
-        </View>
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 }

@@ -11,7 +11,7 @@ import {Appointmentdata} from '../../../component/FormData';
 import {vh, vw} from '../../../constaint';
 import time from '../../../assets/time.png';
 import Calendar_check from '../../../assets/Calendar_check.png';
-function AppointmentConfirmed({data}) {
+function AppointmentConfirmed({}) {
   const doctorData = {
     title: 'Grace Totoe, Md, FACP',
     text: 'Telemedicine Doctor',
@@ -19,6 +19,7 @@ function AppointmentConfirmed({data}) {
     time: '09:15 PM',
     image: require('../../../assets/profile.png'),
   };
+  const data = [{formStatus: true}, {formStatus: true}];
   return (
     <View style={styles.container}>
       <FlatList

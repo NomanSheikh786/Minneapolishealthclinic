@@ -168,7 +168,7 @@ function DoctorHomeScreen({navigation}) {
                   //   }
                   // }
                   onPress={() =>
-                    navigation.navigate('AppointmentScreen', {item: item})
+                    navigation.navigate('AppointmentScreen', {userData: item})
                   }
                   style={{
                     borderBottomWidth: 1,

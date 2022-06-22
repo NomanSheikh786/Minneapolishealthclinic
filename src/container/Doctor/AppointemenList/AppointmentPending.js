@@ -21,30 +21,30 @@ function AppointmentPending({data, allData}) {
     image: require('../../../assets/profile.png'),
   };
 
-  const handleNotify = () => {
-    console.log('data', allData?.data?.userDetails?.fcmToken);
+  // const handleNotify = () => {
+  //   console.log('data', allData?.data?.userDetails?.fcmToken);
 
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    // const token = await AsyncStorage.getItem('fcmToken');
-    // console.log('token', token);
-    axios
-      .post(
-        'http://192.168.100.169:5000/fcm',
-        {
-          token: allData?.data?.userDetails?.fcmToken,
-          message: 'Your Appointment Data 12/12/22',
-        },
-        headers,
-      )
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //   };
+  //   // const token = await AsyncStorage.getItem('fcmToken');
+  //   // console.log('token', token);
+  //   axios
+  //     .post(
+  //       'http://192.168.100.169:5000/fcm',
+  //       {
+  //         token: allData?.data?.userDetails?.fcmToken,
+  //         message: 'Your Appointment Data 12/12/22',
+  //       },
+  //       headers,
+  //     )
+  //     .then(res => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <View style={styles.container}>
       <FlatList

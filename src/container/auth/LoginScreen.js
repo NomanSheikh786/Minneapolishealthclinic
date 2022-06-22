@@ -152,7 +152,7 @@ const LoginScreen = ({navigation}) => {
             )}
           </View>
 
-          <View
+          {/* <View
             style={{
               marginTop: vh * 0.06,
               flexDirection: 'row',
@@ -171,7 +171,7 @@ const LoginScreen = ({navigation}) => {
                 Remember me
               </Text>
             </View>
-          </View>
+          </View> */}
 
           <View
             style={{
@@ -181,15 +181,15 @@ const LoginScreen = ({navigation}) => {
               width: vw - 90,
               marginTop: vh * 0.04,
             }}>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Image style={{}} source={require('../../assets/iphone.png')} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity>
               <Image style={{}} source={require('../../assets/Group.png')} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Image style={{}} source={require('../../assets/facebok.png')} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View

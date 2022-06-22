@@ -12,8 +12,8 @@ const SubmitData = (finalForm, setLoad, navigation, formName) => {
   setLoad(true);
   firebase
     .database()
-    .ref(`users/${id}/forms/${formName}/${today}`)
-    .push({
+    .ref(`users/${id}/forms/${formName}`)
+    .set({
       finalForm,
       formStatus: false,
       // confirmpassword,

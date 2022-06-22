@@ -12,6 +12,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AppointmentScreen from '../../container/Doctor/AppointmentScreen';
 import AppointmentListScreen from '../../container/Doctor/AppointmentListScreen';
 import AppointmentHIstoryDetails from '../../container/Doctor/AppointemenList/AppointmentHIstoryDet';
+import FormDetails from '../../container/Doctor/FormDetails';
 const Navigation = () => {
   const [mystack, setMyStack] = useState(<Text></Text>);
   const [doctor, setDoctor] = useState(false);
@@ -26,6 +27,7 @@ const Navigation = () => {
 
       // if (user) {
       let id = firebase.auth().currentUser.uid;
+      console.log('id,', id);
       firebase
         .database()
         .ref(`users/${id}/userDetails`)
@@ -71,6 +73,11 @@ const Navigation = () => {
         <Stack.Screen
           name="AppointmentHistoryDetails"
           component={AppointmentHIstoryDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FormDetails"
+          component={FormDetails}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

@@ -57,6 +57,7 @@ import FormSubmit from '../../component/FormSubmit';
 import ResetPassword from '../../container/app/ResetPassword/ResetPassword';
 import PaymentMethod from '../../container/app/PaymentMethod';
 import CheckEmailScreen from '../../container/app/ResetPassword/CheckYourEmailAddress';
+import DoctorListingDetailsScreen from '../../container/app/DoctorListingDetailsScreen';
 
 function Tab() {
   const Tab = createBottomTabNavigator();
@@ -321,6 +322,12 @@ const BottomNavigation = () => {
       <Stack.Screen
         name="PaymentMethod"
         component={PaymentMethod}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="DoctorListingDetailsScreen"
+        component={DoctorListingDetailsScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

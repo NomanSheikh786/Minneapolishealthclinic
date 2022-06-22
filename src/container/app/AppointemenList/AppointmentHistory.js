@@ -11,7 +11,7 @@ import {
 import {vh, vw} from '../../../constaint';
 import time from '../../../assets/time.png';
 import Calendar_check from '../../../assets/Calendar_check.png';
-function AppointmentHistory({data, navigation}) {
+function AppointmentHistory({navigation}) {
   const doctorData = {
     title: 'Grace Totoe, Md, FACP',
     text: 'Telemedicine Doctor',
@@ -19,6 +19,7 @@ function AppointmentHistory({data, navigation}) {
     time: '09:15 PM',
     image: require('../../../assets/profile.png'),
   };
+  const data = [{formStatus: true}];
 
   return (
     <View style={styles.container}>

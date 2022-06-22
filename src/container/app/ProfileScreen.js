@@ -265,7 +265,7 @@ function ProfileScreen(props) {
             <Switch />
           </HStack>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           // onPress={() => props.navigation.navigate('PaymentMethod')}
           style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
@@ -282,8 +282,8 @@ function ProfileScreen(props) {
             resizeMode={'contain'}
             style={{height: 20, width: 20, margin: 15}}
           />
-        </TouchableOpacity>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        </TouchableOpacity> */}
+        {/* <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text
             style={{
               color: 'black',
@@ -292,12 +292,12 @@ function ProfileScreen(props) {
               margin: 15,
             }}>
             Change Language
-          </Text>
-          {/* <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/> */}
-          <Text style={{color: '#007BFF', margin: 20, fontSize: 18}}>
+          </Text> */}
+        {/* <Image source={require("../../assets/nav.png")} resizeMode={'contain'} style={{height:20,width:20,margin: 15}}/> */}
+        {/* <Text style={{color: '#007BFF', margin: 20, fontSize: 18}}>
             English
           </Text>
-        </View>
+        </View> */}
         <TouchableOpacity
           onPress={() => props.navigation.navigate('ResetPassword')}
           style={{flexDirection: 'row', justifyContent: 'space-between'}}>

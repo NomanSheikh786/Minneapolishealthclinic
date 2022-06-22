@@ -12,6 +12,7 @@ import AppointmentListScreen from '../../container/app/AppointmentListScreen';
 import AppointmentHIstoryDetails from '../../container/app/AppointemenList/AppointmentHIstoryDet';
 import FaqScreen from '../../container/app/FaqScreen';
 import EditProfileScreen from '../../container/app/EditProfileScreen';
+import AppointmentTabs from '../../container/app/AppointemenList';
 
 const Stack = createStackNavigator();
 
@@ -40,11 +41,11 @@ const DoctorListingStack = () => {
         component={DoctorListingScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="DoctorListingDetailsScreen"
         component={DoctorListingDetailsScreen}
         options={{headerShown: false}}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -52,6 +53,11 @@ const DoctorListingStack = () => {
 const AppointmentStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Appointment"
+        component={AppointmentTabs}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="AppointmentScreen"
         component={AppointmentScreen}
