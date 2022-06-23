@@ -26,7 +26,7 @@ function FormDetails({route}) {
   const callbacks = {
     EndCall: () => setVideoCall(false),
   };
-  console.log(userData?.data?.userDetails?.fcmToken);
+  console.log(userData?.data?.token?.fcmToken);
   const handleNotify = () => {
     if (!title || !message) {
       alert('type your title & message');
@@ -41,7 +41,7 @@ function FormDetails({route}) {
         .post(
           'https://clinicminneapolishealth.herokuapp.com/fcm',
           {
-            token: userData?.data?.userDetails?.fcmToken,
+            token: userData?.data?.token?.fcmToken,
             title: title,
             message: message,
           },
@@ -51,10 +51,12 @@ function FormDetails({route}) {
           console.log(res.data);
           setCheck(false);
           setLoadNot(false);
+          alert('Notification Send');
         })
         .catch(err => {
           console.log(err);
           setLoadNot(false);
+          alert('Something went wrong');
         });
     }
     // console.log('data', allData?.data?.userDetails?.fcmToken);

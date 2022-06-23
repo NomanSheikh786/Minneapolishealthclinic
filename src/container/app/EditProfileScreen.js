@@ -41,30 +41,38 @@ function EditProfileScreen({navigation}) {
   const [load, setLoad] = useState(false);
   const [updateLoader, setUpdateLoader] = useState(false);
 
-  let id = firebase.auth().currentUser.uid;
   useEffect(() => {
     setLoad(true);
-    firebase
-      .database()
-      .ref(`users/${id}/userDetails`)
-      .on('value', firebaseData => {
-        let data = firebaseData.val();
-        setLoad(false);
+    try {
+      let id = firebase.auth().currentUser.uid;
+      if (!id) {
+        console.log('user not found');
+      } else {
+        firebase
+          .database()
+          .ref(`users/${id}/userDetails`)
+          .on('value', firebaseData => {
+            let data = firebaseData.val();
+            setLoad(false);
 
-        setState({
-          ...state,
-          ['email']: data?.email ? data.email : '',
-          ['fname']: data?.fname ? data.fname : '',
-          ['lname']: data?.lname ? data.lname : '',
-          ['gender']: data?.gender ? data.gender : '',
-          ['month']: data?.dataOfBirth ? data?.dataOfBirth?.month : '',
-          ['day']: data?.dataOfBirth ? data?.dataOfBirth?.day : '',
-          ['year']: data?.dataOfBirth ? data?.dataOfBirth?.year : '',
-          ['country']: data?.country ? data.country : '',
-          ['phone']: data?.phone ? data.phone : '',
-          ['address']: data?.address ? data.address : '',
-        });
-      });
+            setState({
+              ...state,
+              ['email']: data?.email ? data.email : '',
+              ['fname']: data?.fname ? data.fname : '',
+              ['lname']: data?.lname ? data.lname : '',
+              ['gender']: data?.gender ? data.gender : '',
+              ['month']: data?.dataOfBirth ? data?.dataOfBirth?.month : '',
+              ['day']: data?.dataOfBirth ? data?.dataOfBirth?.day : '',
+              ['year']: data?.dataOfBirth ? data?.dataOfBirth?.year : '',
+              ['country']: data?.country ? data.country : '',
+              ['phone']: data?.phone ? data.phone : '',
+              ['address']: data?.address ? data.address : '',
+            });
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   const [state, setState] = useState({
     fname: '',
@@ -98,6 +106,7 @@ function EditProfileScreen({navigation}) {
     },
     country: state.country,
     address: state.address,
+    isDoctor: false,
   };
 
   const updateProfile = () => {

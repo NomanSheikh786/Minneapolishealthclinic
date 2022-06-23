@@ -26,17 +26,23 @@ const Navigation = () => {
       // }
 
       // if (user) {
-      let id = firebase.auth().currentUser.uid;
-      console.log('id,', id);
-      firebase
-        .database()
-        .ref(`users/${id}/userDetails`)
-        .on('value', firebaseData => {
-          let data = firebaseData.val();
-          setDoctor(data?.isDoctor);
-          console.log(data?.isDoctor);
-        });
-      // }
+      try {
+        let id = firebase.auth().currentUser.uid;
+        if (id) {
+          firebase
+            .database()
+            .ref(`users/${id}/userDetails`)
+            .on('value', firebaseData => {
+              let data = firebaseData.val();
+              setDoctor(data?.isDoctor);
+              console.log(data?.isDoctor);
+            });
+        } else {
+          console.log('No User');
+        }
+      } catch (error) {
+        console.log(error, 'erro');
+      }
     });
   };
   useEffect(() => {

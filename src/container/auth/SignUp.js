@@ -37,8 +37,6 @@ const SignUp = ({navigation}) => {
 
   // console.log(checkbox);
 
-  const getToken = async () => {};
-
   const signUpUser = async () => {
     const fcmToken = await AsyncStorage.getItem('fcmToken');
 
@@ -52,7 +50,6 @@ const SignUp = ({navigation}) => {
       country: '',
       address: '',
       isDoctor: false,
-      fcmToken: fcmToken,
     };
     if (
       name == '' ||
@@ -90,6 +87,30 @@ const SignUp = ({navigation}) => {
               setPassword('');
               setConfirmPassword('');
               setCheckbox(false);
+            })
+            .then(res => {
+              try {
+                let id = firebase.auth().currentUser.uid;
+                if (id) {
+                  firebase
+                    .database()
+                    .ref(`users/${id}/token`)
+                    .set({
+                      fcmToken: fcmToken,
+                    })
+                    .then(res => {
+                      console.log('token saved');
+                      setCheckToken(true);
+                    })
+                    .catch(err => {
+                      console.log(err, 'Error');
+                    });
+                } else {
+                  console.log('user did not logged in');
+                }
+              } catch (error) {
+                console.log(error);
+              }
             })
             .catch(err => {
               alert(err.message);

@@ -13,12 +13,14 @@ import {NativeBaseProvider} from 'native-base';
 import AgoraUIKit, {mode, role} from 'agora-rn-uikit';
 import {LogBox} from 'react-native';
 import PushNotification from 'react-native-push-notification';
-
+import firebase from 'firebase';
 import {
   requestUserPermission,
   notificationListener,
 } from './src/configue/notificationService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const App = () => {
+  const [checkToken, setCheckToken] = useState(false);
   // const [videoCall, setVideoCall] = useState(true);
   // const rtcProps = {
   //   appId: '90133bcd4f1a4c459699ca2934973349',
@@ -35,7 +37,7 @@ const App = () => {
     if (Platform.OS === 'android') {
       PushNotification.configure({
         onRegister: function (token) {
-          console.log('TOKEN:', token);
+          console.log('TOKEN:', token.token);
         },
 
         onNotification: function (notification) {
@@ -66,10 +68,12 @@ const App = () => {
 
     requestUserPermission();
     notificationListener();
-
+    // await AsyncStorage.getItem('fcmToken');
+    // const token = getToken();
+    // console.log('token', token);
     // requestUserPermission();
     // notificationListener();
-  }, []);
+  }, [checkToken]);
   return (
     <NativeBaseProvider>
       <StatusBar backgroundColor={'#FFF'} barStyle="dark-content" />

@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import RedLongButton from '../../component/RedLongButton';
-import firebase from '../../configue/index';
+import firebase from 'firebase';
 import {vh, vw} from '../../constaint/index';
 import {Switch, HStack, Center, NativeBaseProvider} from 'native-base';
 import SpaceGrayButton from '../../component/SpaceGrayButton';
@@ -35,17 +35,26 @@ function ProfileScreen(props) {
       .catch(err => console.log(err));
   };
 
-  let id = firebase.auth().currentUser.uid;
   useEffect(() => {
     setLoad(true);
-    firebase
-      .database()
-      .ref(`users/${id}/userDetails`)
-      .on('value', firebaseData => {
-        let data = firebaseData.val();
-        setName(data?.fname ? data?.fname : 'Unkown');
-        setLoad(false);
-      });
+
+    try {
+      let id = firebase.auth().currentUser.uid;
+      if (!id) {
+        console.log('No Id');
+      } else {
+        firebase
+          .database()
+          .ref(`users/${id}/userDetails`)
+          .on('value', firebaseData => {
+            let data = firebaseData.val();
+            setName(data?.fname ? data?.fname : 'Unkown');
+            setLoad(false);
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // const addImage = async () => {
@@ -184,7 +193,7 @@ function ProfileScreen(props) {
                 color: 'black',
                 textAlign: 'center',
               }}>
-              {name}
+              {name ? name : 'Unknown'}
             </Text>
           )}
         </View>

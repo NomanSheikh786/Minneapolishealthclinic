@@ -23,6 +23,7 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 import firebase from '../../configue/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -38,7 +39,9 @@ const LoginScreen = ({navigation}) => {
     },
   ];
 
-  const loginUser = () => {
+  const loginUser = async () => {
+    const fcmToken = await AsyncStorage.getItem('fcmToken');
+
     if (email == '' || password == '') {
       alert('Must Required fill this blank');
     } else {
@@ -47,8 +50,29 @@ const LoginScreen = ({navigation}) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(res => {
-          alert('Sign in Success');
-
+          // alert('Sign in Success');
+          try {
+            let id = firebase.auth().currentUser.uid;
+            if (id) {
+              firebase
+                .database()
+                .ref(`users/${id}/token`)
+                .set({
+                  fcmToken: fcmToken,
+                })
+                .then(res => {
+                  console.log('token saved');
+                  setCheckToken(true);
+                })
+                .catch(err => {
+                  console.log(err, 'Error');
+                });
+            } else {
+              console.log('user did not logged in');
+            }
+          } catch (error) {
+            console.log(error);
+          }
           // let id = firebase.auth().currentUser.uid;
           // firebase
           //   .database()
