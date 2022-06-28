@@ -109,7 +109,20 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom1active} />
+              <View
+                style={{
+                  backgroundColor: '#FE284D',
+                  width: 30,
+                  height: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                }}>
+                <Image
+                  width={24}
+                  source={require('../../assets/home-active.png')}
+                />
+              </View>
             ) : (
               <Image width={20} source={bottom1} />
             ),
@@ -122,7 +135,20 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom2active} />
+              <View
+                style={{
+                  backgroundColor: '#FE284D',
+                  width: 32,
+                  height: 32,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                }}>
+                <Image
+                  width={24}
+                  source={require('../../assets/doctor-active.png')}
+                />
+              </View>
             ) : (
               <Image width={20} source={bottom2} />
             ),
@@ -146,7 +172,20 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom4active} />
+              <View
+                style={{
+                  backgroundColor: '#FE284D',
+                  width: 30,
+                  height: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                }}>
+                <Image
+                  width={24}
+                  source={require('../../assets/noti-active.png')}
+                />
+              </View>
             ) : (
               <Image width={20} source={bottom4} />
             ),
@@ -159,7 +198,20 @@ function Tab() {
         options={{
           tabBarIcon: ({color, focused}) =>
             focused ? (
-              <Image width={20} source={bottom4active} />
+              <View
+                style={{
+                  backgroundColor: '#FE284D',
+                  width: 30,
+                  height: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+                }}>
+                <Image
+                  width={24}
+                  source={require('../../assets/profile-active.png')}
+                />
+              </View>
             ) : (
               <Image width={20} source={bottom5} />
             ),

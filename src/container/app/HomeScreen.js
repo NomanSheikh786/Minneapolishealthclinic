@@ -1,5 +1,5 @@
-import { Alert, CloseIcon, HStack, IconButton, VStack } from 'native-base';
-import React from 'react';
+import {Alert, CloseIcon, HStack, IconButton, VStack} from 'native-base';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -97,12 +97,18 @@ const data = [
 ];
 
 function HomeScreen({navigation}) {
-    // const [check,setCheck] =useState(false)
+  const [search, setSearch] = useState('');
 
+  const filteredData = data.filter(item => {
+    if (search == '') {
+      return item;
+    } else if (item?.name.toLowerCase().includes(search.toLowerCase())) {
+      return item;
+    }
+  });
   return (
     <View style={styles.container}>
-
-{/* {check ? <Alert w="100%" status={"success"}>
+      {/* {check ? <Alert w="100%" status={"success"}>
               <VStack space={2} flexShrink={1} w="100%">
                 <HStack flexShrink={1} space={2} justifyContent="space-between">
                   <HStack space={2} flexShrink={1}>
@@ -152,6 +158,8 @@ function HomeScreen({navigation}) {
             shadowOffset: {width: 10, height: 10},
           }}>
           <TextInput
+            onChangeText={e => setSearch(e)}
+            value={search}
             style={{
               color: '#FFF',
               borderRadius: 8,
@@ -166,7 +174,7 @@ function HomeScreen({navigation}) {
       </View>
 
       <View style={{}}>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -178,7 +186,7 @@ function HomeScreen({navigation}) {
           <TouchableOpacity activeOpacity={0.6}>
             <Text style={{color: '#FFF', fontSize: 14}}>View All</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <ScrollView
           style={{}}
           contentContainerStyle={{
@@ -189,7 +197,7 @@ function HomeScreen({navigation}) {
             // borderColor: 'green',
             // marginLeft: vw / 20,
           }}>
-          {data.map((item, ind) => {
+          {filteredData.map((item, ind) => {
             return (
               <View
                 key={ind}
